@@ -1,0 +1,599 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3B5D5BC21F5F10A100C0E68B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5BC11F5F10A100C0E68B /* main.m */; };
+		3B5D5BC51F5F10A100C0E68B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5BC41F5F10A100C0E68B /* AppDelegate.m */; };
+		3B5D5BC81F5F10A100C0E68B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5BC71F5F10A100C0E68B /* ViewController.m */; };
+		3B5D5BCB1F5F10A100C0E68B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B5D5BC91F5F10A100C0E68B /* Main.storyboard */; };
+		3B5D5BCD1F5F10A100C0E68B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B5D5BCC1F5F10A100C0E68B /* Assets.xcassets */; };
+		3B5D5BD01F5F10A100C0E68B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B5D5BCE1F5F10A100C0E68B /* LaunchScreen.storyboard */; };
+		7B9E8494F47D207246BA9CFC /* libPods-AbuKlineView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B945EAE9C2DE1399B9A393E /* libPods-AbuKlineView.a */; };
+		840AC4E4212D759D00F22AB0 /* stock15.json in Resources */ = {isa = PBXBuildFile; fileRef = 840AC4E0212D759D00F22AB0 /* stock15.json */; };
+		840AC4E5212D759D00F22AB0 /* stock30.json in Resources */ = {isa = PBXBuildFile; fileRef = 840AC4E1212D759D00F22AB0 /* stock30.json */; };
+		840AC4E6212D759D00F22AB0 /* stock5.json in Resources */ = {isa = PBXBuildFile; fileRef = 840AC4E2212D759D00F22AB0 /* stock5.json */; };
+		840AC4E7212D759D00F22AB0 /* stock60.json in Resources */ = {isa = PBXBuildFile; fileRef = 840AC4E3212D759D00F22AB0 /* stock60.json */; };
+		840AC4E9212D768900F22AB0 /* stockDay.json in Resources */ = {isa = PBXBuildFile; fileRef = 840AC4E8212D768900F22AB0 /* stockDay.json */; };
+		843E01452133D98A0089D196 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 843E01432133D98A0089D196 /* BaseViewController.m */; };
+		84A6C6631FCED0660094FDA5 /* stock1.json in Resources */ = {isa = PBXBuildFile; fileRef = 84A6C6621FCED0660094FDA5 /* stock1.json */; };
+		84FF7FA9214BA466001BF74D /* UIBezierPath+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F80214BA466001BF74D /* UIBezierPath+Extension.m */; };
+		84FF7FAA214BA466001BF74D /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F81214BA466001BF74D /* UIColor+Extension.m */; };
+		84FF7FAB214BA466001BF74D /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F82214BA466001BF74D /* UIView+Extension.m */; };
+		84FF7FAC214BA466001BF74D /* KLineSubCalculate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F89214BA466001BF74D /* KLineSubCalculate.m */; };
+		84FF7FAD214BA466001BF74D /* KLineCalculate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F8A214BA466001BF74D /* KLineCalculate.m */; };
+		84FF7FAF214BA466001BF74D /* KlinePriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F8F214BA466001BF74D /* KlinePriceView.m */; };
+		84FF7FB0214BA466001BF74D /* KlineCurrentPriceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F90214BA466001BF74D /* KlineCurrentPriceView.m */; };
+		84FF7FB1214BA466001BF74D /* KlineVerticalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F92214BA466001BF74D /* KlineVerticalView.m */; };
+		84FF7FB2214BA466001BF74D /* AbuKlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F96214BA466001BF74D /* AbuKlineView.m */; };
+		84FF7FB3214BA466001BF74D /* AbuCandChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F97214BA466001BF74D /* AbuCandChartView.m */; };
+		84FF7FB4214BA466001BF74D /* KlineTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F9B214BA466001BF74D /* KlineTitleView.m */; };
+		84FF7FB5214BA466001BF74D /* KlineTimeLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F9E214BA466001BF74D /* KlineTimeLayer.m */; };
+		84FF7FB6214BA466001BF74D /* KlineMALayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7F9F214BA466001BF74D /* KlineMALayer.m */; };
+		84FF7FB7214BA466001BF74D /* KlineQuotaColumnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7FA0214BA466001BF74D /* KlineQuotaColumnLayer.m */; };
+		84FF7FB8214BA466001BF74D /* KlineCandelLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7FA4214BA466001BF74D /* KlineCandelLayer.m */; };
+		84FF7FB9214BA466001BF74D /* KLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FF7FA7214BA466001BF74D /* KLineModel.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1B32FAFA1F5F857D003753CE /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		2CCCFDA06431F3179229CD43 /* Pods-AbuKlineView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AbuKlineView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AbuKlineView/Pods-AbuKlineView.debug.xcconfig"; sourceTree = "<group>"; };
+		3B5D5BBD1F5F10A100C0E68B /* AbuKlineView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AbuKlineView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B5D5BC11F5F10A100C0E68B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3B5D5BC31F5F10A100C0E68B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3B5D5BC41F5F10A100C0E68B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3B5D5BC61F5F10A100C0E68B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		3B5D5BC71F5F10A100C0E68B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		3B5D5BCA1F5F10A100C0E68B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3B5D5BCC1F5F10A100C0E68B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3B5D5BCF1F5F10A100C0E68B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3B5D5BD11F5F10A100C0E68B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B945EAE9C2DE1399B9A393E /* libPods-AbuKlineView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AbuKlineView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		840AC4E0212D759D00F22AB0 /* stock15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stock15.json; sourceTree = "<group>"; };
+		840AC4E1212D759D00F22AB0 /* stock30.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stock30.json; sourceTree = "<group>"; };
+		840AC4E2212D759D00F22AB0 /* stock5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stock5.json; sourceTree = "<group>"; };
+		840AC4E3212D759D00F22AB0 /* stock60.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stock60.json; sourceTree = "<group>"; };
+		840AC4E8212D768900F22AB0 /* stockDay.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stockDay.json; sourceTree = "<group>"; };
+		843E01432133D98A0089D196 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		843E01442133D98A0089D196 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		84A6C6621FCED0660094FDA5 /* stock1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stock1.json; sourceTree = "<group>"; };
+		84FF7F7B214BA466001BF74D /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		84FF7F7D214BA466001BF74D /* UIBezierPath+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+Extension.h"; sourceTree = "<group>"; };
+		84FF7F7E214BA466001BF74D /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		84FF7F7F214BA466001BF74D /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		84FF7F80214BA466001BF74D /* UIBezierPath+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+Extension.m"; sourceTree = "<group>"; };
+		84FF7F81214BA466001BF74D /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
+		84FF7F82214BA466001BF74D /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		84FF7F86214BA466001BF74D /* KLineSubCalculate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLineSubCalculate.h; sourceTree = "<group>"; };
+		84FF7F87214BA466001BF74D /* KLineCalculate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLineCalculate.h; sourceTree = "<group>"; };
+		84FF7F89214BA466001BF74D /* KLineSubCalculate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLineSubCalculate.m; sourceTree = "<group>"; };
+		84FF7F8A214BA466001BF74D /* KLineCalculate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLineCalculate.m; sourceTree = "<group>"; };
+		84FF7F8D214BA466001BF74D /* KlineCurrentPriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineCurrentPriceView.h; sourceTree = "<group>"; };
+		84FF7F8E214BA466001BF74D /* KlineVerticalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineVerticalView.h; sourceTree = "<group>"; };
+		84FF7F8F214BA466001BF74D /* KlinePriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlinePriceView.m; sourceTree = "<group>"; };
+		84FF7F90214BA466001BF74D /* KlineCurrentPriceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineCurrentPriceView.m; sourceTree = "<group>"; };
+		84FF7F91214BA466001BF74D /* KlinePriceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlinePriceView.h; sourceTree = "<group>"; };
+		84FF7F92214BA466001BF74D /* KlineVerticalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineVerticalView.m; sourceTree = "<group>"; };
+		84FF7F94214BA466001BF74D /* AbuCandChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbuCandChartView.h; sourceTree = "<group>"; };
+		84FF7F95214BA466001BF74D /* AbuCharViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbuCharViewProtocol.h; sourceTree = "<group>"; };
+		84FF7F96214BA466001BF74D /* AbuKlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbuKlineView.m; sourceTree = "<group>"; };
+		84FF7F97214BA466001BF74D /* AbuCandChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbuCandChartView.m; sourceTree = "<group>"; };
+		84FF7F98214BA466001BF74D /* AbuKlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbuKlineView.h; sourceTree = "<group>"; };
+		84FF7F9A214BA466001BF74D /* KlineTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineTitleView.h; sourceTree = "<group>"; };
+		84FF7F9B214BA466001BF74D /* KlineTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineTitleView.m; sourceTree = "<group>"; };
+		84FF7F9E214BA466001BF74D /* KlineTimeLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineTimeLayer.m; sourceTree = "<group>"; };
+		84FF7F9F214BA466001BF74D /* KlineMALayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineMALayer.m; sourceTree = "<group>"; };
+		84FF7FA0214BA466001BF74D /* KlineQuotaColumnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineQuotaColumnLayer.m; sourceTree = "<group>"; };
+		84FF7FA1214BA466001BF74D /* KlineCandelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineCandelLayer.h; sourceTree = "<group>"; };
+		84FF7FA2214BA466001BF74D /* KlineTimeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineTimeLayer.h; sourceTree = "<group>"; };
+		84FF7FA3214BA466001BF74D /* KlineMALayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineMALayer.h; sourceTree = "<group>"; };
+		84FF7FA4214BA466001BF74D /* KlineCandelLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KlineCandelLayer.m; sourceTree = "<group>"; };
+		84FF7FA5214BA466001BF74D /* KlineQuotaColumnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KlineQuotaColumnLayer.h; sourceTree = "<group>"; };
+		84FF7FA7214BA466001BF74D /* KLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLineModel.m; sourceTree = "<group>"; };
+		84FF7FA8214BA466001BF74D /* KLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLineModel.h; sourceTree = "<group>"; };
+		BB62F47A80B624362DDD64EB /* Pods-AbuKlineView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AbuKlineView.release.xcconfig"; path = "Pods/Target Support Files/Pods-AbuKlineView/Pods-AbuKlineView.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3B5D5BBA1F5F10A100C0E68B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7B9E8494F47D207246BA9CFC /* libPods-AbuKlineView.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3B5D5BB41F5F10A100C0E68B = {
+			isa = PBXGroup;
+			children = (
+				3B5D5BBF1F5F10A100C0E68B /* AbuKlineView */,
+				3B5D5BBE1F5F10A100C0E68B /* Products */,
+				E72041AE25B125B33B20953D /* Pods */,
+				54E184B437465506C13083D9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		3B5D5BBE1F5F10A100C0E68B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3B5D5BBD1F5F10A100C0E68B /* AbuKlineView.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3B5D5BBF1F5F10A100C0E68B /* AbuKlineView */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F79214BA466001BF74D /* KlineView */,
+				3B5D5BC31F5F10A100C0E68B /* AppDelegate.h */,
+				3B5D5BC41F5F10A100C0E68B /* AppDelegate.m */,
+				3B5D5BC61F5F10A100C0E68B /* ViewController.h */,
+				3B5D5BC71F5F10A100C0E68B /* ViewController.m */,
+				843E01442133D98A0089D196 /* BaseViewController.h */,
+				843E01432133D98A0089D196 /* BaseViewController.m */,
+				84A6C6621FCED0660094FDA5 /* stock1.json */,
+				840AC4E2212D759D00F22AB0 /* stock5.json */,
+				840AC4E0212D759D00F22AB0 /* stock15.json */,
+				840AC4E1212D759D00F22AB0 /* stock30.json */,
+				840AC4E3212D759D00F22AB0 /* stock60.json */,
+				840AC4E8212D768900F22AB0 /* stockDay.json */,
+				3B5D5BC91F5F10A100C0E68B /* Main.storyboard */,
+				3B5D5BCC1F5F10A100C0E68B /* Assets.xcassets */,
+				3B5D5BCE1F5F10A100C0E68B /* LaunchScreen.storyboard */,
+				3B5D5BD11F5F10A100C0E68B /* Info.plist */,
+				3B5D5BC01F5F10A100C0E68B /* Supporting Files */,
+			);
+			path = AbuKlineView;
+			sourceTree = "<group>";
+		};
+		3B5D5BC01F5F10A100C0E68B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3B5D5BC11F5F10A100C0E68B /* main.m */,
+				1B32FAFA1F5F857D003753CE /* Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		54E184B437465506C13083D9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6B945EAE9C2DE1399B9A393E /* libPods-AbuKlineView.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84FF7F79214BA466001BF74D /* KlineView */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F7A214BA466001BF74D /* APIManage */,
+				84FF7F7C214BA466001BF74D /* Category */,
+				84FF7F84214BA466001BF74D /* KLineView */,
+				84FF7FA6214BA466001BF74D /* KLineModel */,
+			);
+			path = KlineView;
+			sourceTree = "<group>";
+		};
+		84FF7F7A214BA466001BF74D /* APIManage */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F7B214BA466001BF74D /* PrefixHeader.pch */,
+			);
+			path = APIManage;
+			sourceTree = "<group>";
+		};
+		84FF7F7C214BA466001BF74D /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F7D214BA466001BF74D /* UIBezierPath+Extension.h */,
+				84FF7F80214BA466001BF74D /* UIBezierPath+Extension.m */,
+				84FF7F7E214BA466001BF74D /* UIColor+Extension.h */,
+				84FF7F81214BA466001BF74D /* UIColor+Extension.m */,
+				84FF7F7F214BA466001BF74D /* UIView+Extension.h */,
+				84FF7F82214BA466001BF74D /* UIView+Extension.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		84FF7F84214BA466001BF74D /* KLineView */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F85214BA466001BF74D /* KLineCaculate */,
+				84FF7F8C214BA466001BF74D /* KlineCommonView */,
+				84FF7F93214BA466001BF74D /* KLineView */,
+				84FF7F99214BA466001BF74D /* KLineTitleView */,
+				84FF7F9D214BA466001BF74D /* KLineLayer */,
+			);
+			path = KLineView;
+			sourceTree = "<group>";
+		};
+		84FF7F85214BA466001BF74D /* KLineCaculate */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F86214BA466001BF74D /* KLineSubCalculate.h */,
+				84FF7F87214BA466001BF74D /* KLineCalculate.h */,
+				84FF7F89214BA466001BF74D /* KLineSubCalculate.m */,
+				84FF7F8A214BA466001BF74D /* KLineCalculate.m */,
+			);
+			path = KLineCaculate;
+			sourceTree = "<group>";
+		};
+		84FF7F8C214BA466001BF74D /* KlineCommonView */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F8D214BA466001BF74D /* KlineCurrentPriceView.h */,
+				84FF7F8E214BA466001BF74D /* KlineVerticalView.h */,
+				84FF7F8F214BA466001BF74D /* KlinePriceView.m */,
+				84FF7F90214BA466001BF74D /* KlineCurrentPriceView.m */,
+				84FF7F91214BA466001BF74D /* KlinePriceView.h */,
+				84FF7F92214BA466001BF74D /* KlineVerticalView.m */,
+			);
+			path = KlineCommonView;
+			sourceTree = "<group>";
+		};
+		84FF7F93214BA466001BF74D /* KLineView */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F94214BA466001BF74D /* AbuCandChartView.h */,
+				84FF7F97214BA466001BF74D /* AbuCandChartView.m */,
+				84FF7F95214BA466001BF74D /* AbuCharViewProtocol.h */,
+				84FF7F98214BA466001BF74D /* AbuKlineView.h */,
+				84FF7F96214BA466001BF74D /* AbuKlineView.m */,
+			);
+			path = KLineView;
+			sourceTree = "<group>";
+		};
+		84FF7F99214BA466001BF74D /* KLineTitleView */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7F9A214BA466001BF74D /* KlineTitleView.h */,
+				84FF7F9B214BA466001BF74D /* KlineTitleView.m */,
+			);
+			path = KLineTitleView;
+			sourceTree = "<group>";
+		};
+		84FF7F9D214BA466001BF74D /* KLineLayer */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7FA1214BA466001BF74D /* KlineCandelLayer.h */,
+				84FF7FA4214BA466001BF74D /* KlineCandelLayer.m */,
+				84FF7FA3214BA466001BF74D /* KlineMALayer.h */,
+				84FF7F9F214BA466001BF74D /* KlineMALayer.m */,
+				84FF7FA5214BA466001BF74D /* KlineQuotaColumnLayer.h */,
+				84FF7FA0214BA466001BF74D /* KlineQuotaColumnLayer.m */,
+				84FF7FA2214BA466001BF74D /* KlineTimeLayer.h */,
+				84FF7F9E214BA466001BF74D /* KlineTimeLayer.m */,
+			);
+			path = KLineLayer;
+			sourceTree = "<group>";
+		};
+		84FF7FA6214BA466001BF74D /* KLineModel */ = {
+			isa = PBXGroup;
+			children = (
+				84FF7FA7214BA466001BF74D /* KLineModel.m */,
+				84FF7FA8214BA466001BF74D /* KLineModel.h */,
+			);
+			path = KLineModel;
+			sourceTree = "<group>";
+		};
+		E72041AE25B125B33B20953D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2CCCFDA06431F3179229CD43 /* Pods-AbuKlineView.debug.xcconfig */,
+				BB62F47A80B624362DDD64EB /* Pods-AbuKlineView.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3B5D5BBC1F5F10A100C0E68B /* AbuKlineView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B5D5BD41F5F10A100C0E68B /* Build configuration list for PBXNativeTarget "AbuKlineView" */;
+			buildPhases = (
+				3195D9E0AFF8B70A1E41CDC0 /* [CP] Check Pods Manifest.lock */,
+				4CD49FED94D9638C64A07B06 /* 📦 Check Pods Manifest.lock */,
+				3B5D5BB91F5F10A100C0E68B /* Sources */,
+				3B5D5BBA1F5F10A100C0E68B /* Frameworks */,
+				3B5D5BBB1F5F10A100C0E68B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AbuKlineView;
+			productName = AbuKlineView;
+			productReference = 3B5D5BBD1F5F10A100C0E68B /* AbuKlineView.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3B5D5BB51F5F10A100C0E68B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "阿布";
+				TargetAttributes = {
+					3B5D5BBC1F5F10A100C0E68B = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 2NRT2R6HN7;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 3B5D5BB81F5F10A100C0E68B /* Build configuration list for PBXProject "AbuKlineView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = 3B5D5BB41F5F10A100C0E68B;
+			productRefGroup = 3B5D5BBE1F5F10A100C0E68B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3B5D5BBC1F5F10A100C0E68B /* AbuKlineView */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3B5D5BBB1F5F10A100C0E68B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				840AC4E6212D759D00F22AB0 /* stock5.json in Resources */,
+				84A6C6631FCED0660094FDA5 /* stock1.json in Resources */,
+				840AC4E4212D759D00F22AB0 /* stock15.json in Resources */,
+				3B5D5BD01F5F10A100C0E68B /* LaunchScreen.storyboard in Resources */,
+				840AC4E5212D759D00F22AB0 /* stock30.json in Resources */,
+				840AC4E9212D768900F22AB0 /* stockDay.json in Resources */,
+				3B5D5BCD1F5F10A100C0E68B /* Assets.xcassets in Resources */,
+				840AC4E7212D759D00F22AB0 /* stock60.json in Resources */,
+				3B5D5BCB1F5F10A100C0E68B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3195D9E0AFF8B70A1E41CDC0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AbuKlineView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4CD49FED94D9638C64A07B06 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3B5D5BB91F5F10A100C0E68B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				843E01452133D98A0089D196 /* BaseViewController.m in Sources */,
+				3B5D5BC81F5F10A100C0E68B /* ViewController.m in Sources */,
+				84FF7FB7214BA466001BF74D /* KlineQuotaColumnLayer.m in Sources */,
+				84FF7FAD214BA466001BF74D /* KLineCalculate.m in Sources */,
+				3B5D5BC51F5F10A100C0E68B /* AppDelegate.m in Sources */,
+				84FF7FB9214BA466001BF74D /* KLineModel.m in Sources */,
+				84FF7FB1214BA466001BF74D /* KlineVerticalView.m in Sources */,
+				84FF7FAF214BA466001BF74D /* KlinePriceView.m in Sources */,
+				84FF7FB8214BA466001BF74D /* KlineCandelLayer.m in Sources */,
+				84FF7FAA214BA466001BF74D /* UIColor+Extension.m in Sources */,
+				84FF7FA9214BA466001BF74D /* UIBezierPath+Extension.m in Sources */,
+				84FF7FB5214BA466001BF74D /* KlineTimeLayer.m in Sources */,
+				84FF7FB3214BA466001BF74D /* AbuCandChartView.m in Sources */,
+				84FF7FB0214BA466001BF74D /* KlineCurrentPriceView.m in Sources */,
+				84FF7FB2214BA466001BF74D /* AbuKlineView.m in Sources */,
+				84FF7FB6214BA466001BF74D /* KlineMALayer.m in Sources */,
+				84FF7FAB214BA466001BF74D /* UIView+Extension.m in Sources */,
+				84FF7FB4214BA466001BF74D /* KlineTitleView.m in Sources */,
+				3B5D5BC21F5F10A100C0E68B /* main.m in Sources */,
+				84FF7FAC214BA466001BF74D /* KLineSubCalculate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3B5D5BC91F5F10A100C0E68B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3B5D5BCA1F5F10A100C0E68B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3B5D5BCE1F5F10A100C0E68B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3B5D5BCF1F5F10A100C0E68B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3B5D5BD21F5F10A100C0E68B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3B5D5BD31F5F10A100C0E68B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3B5D5BD51F5F10A100C0E68B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CCCFDA06431F3179229CD43 /* Pods-AbuKlineView.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2NRT2R6HN7;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AbuKlineView/Prefix.pch";
+				INFOPLIST_FILE = AbuKlineView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.aicai.AbuKlineView1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3B5D5BD61F5F10A100C0E68B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB62F47A80B624362DDD64EB /* Pods-AbuKlineView.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 2NRT2R6HN7;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/AbuKlineView/Prefix.pch";
+				INFOPLIST_FILE = AbuKlineView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.aicai.AbuKlineView1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3B5D5BB81F5F10A100C0E68B /* Build configuration list for PBXProject "AbuKlineView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B5D5BD21F5F10A100C0E68B /* Debug */,
+				3B5D5BD31F5F10A100C0E68B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3B5D5BD41F5F10A100C0E68B /* Build configuration list for PBXNativeTarget "AbuKlineView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B5D5BD51F5F10A100C0E68B /* Debug */,
+				3B5D5BD61F5F10A100C0E68B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3B5D5BB51F5F10A100C0E68B /* Project object */;
+}
