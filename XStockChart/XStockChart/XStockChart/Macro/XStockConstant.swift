@@ -109,6 +109,18 @@ public let XStock_CrossCurveColor : UInt32 = 0x999999;
 public  let XStock_CrossInfoBackColor_White : UInt32 = 0x666666;
 public  let XStock_CrossInfoBackColor_Dark : UInt32 = 0x111111;
 
+///MA5颜色
+public let  XStock_MA5Color : UInt32 = 0x0033f3;
+///MA10颜色
+public let  XStock_MA10Color : UInt32 = 0xacac3b;
+///MA20颜色
+public let  XStock_MA20Color : UInt32 = 0x35e2df;
+///MA30颜色
+public let  XStock_MA30Color : UInt32 = 0xe12752;
+///MA60颜色
+public let  XStock_MA60Color : UInt32 = 0xef05c0;
+
+
 
 
 

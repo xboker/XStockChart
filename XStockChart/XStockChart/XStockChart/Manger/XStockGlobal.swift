@@ -43,7 +43,10 @@ class XStockGlobal: NSObject {
     public var infoBarType : XStockLongPressInfoType = .SideBar;
     ///默认情况下竖屏时不显示  成交量的描述
     public var alwaysShowVolumeDes : Bool = true;
-    ///实际的成交量高度
+    ///K线图的柱子类型 实心或者空心
+    public var kLineColumeType = XStockKLineColumeType.Solid;
+    
+    ///实际的成交量视图的高度
     public var volumeHeihgt : CGFloat {
         get {
             if XStockHelper.getScreenDeriction() == .LandscapeScreen {
@@ -53,8 +56,14 @@ class XStockGlobal: NSObject {
             }
         }
     }
-    ///K线图的柱子类型 实心或者空心
-    public var kLineColumeType = XStockKLineColumeType.Solid;
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

@@ -580,9 +580,6 @@ class XStockChartTimeView: UIView {
             return;
         }
         ///右侧留下5%(不让各个线挨着)
-//      upVolumeLayer.lineWidth = itemWidth * 0.95;
-//      downVolumeLayer.lineWidth = itemWidth * 0.95;
-//      aveVolumeLayer.lineWidth = itemWidth * 0.95;
         upVolumeLayer.lineWidth = 1;
         downVolumeLayer.lineWidth = 1;
         aveVolumeLayer.lineWidth = 1;
@@ -648,7 +645,6 @@ class XStockChartTimeView: UIView {
             let avePrice : CGFloat = XStockHelper.getCGFloat(str: idxObj.avePrice);
             let priceOffsetY : CGFloat = XStockHelper.getOffsetY(price: price, minPrice: minPrice, maxPrice: maxPrice, height: chartHeight!);
             let avePriceOffsetY : CGFloat = XStockHelper.getOffsetY(price: avePrice, minPrice: minPrice, maxPrice: maxPrice, height: chartHeight!);
-//            let preClosetOffsetY : CGFloat = XStockHelper.getOffsetY(price: preClosePrice, minPrice: minPrice, maxPrice: maxPrice, height: chartHeight!);
             if idx == 0 {
                 preAvePoint = CGPoint(x: chartLeftTopPoint!.x, y: chartLeftTopPoint!.y + avePriceOffsetY);
                 prePricePoint = CGPoint(x: chartLeftTopPoint!.x, y: chartLeftTopPoint!.y + priceOffsetY);
@@ -659,14 +655,13 @@ class XStockChartTimeView: UIView {
                 timePath.addLine(to: CGPoint(x: chartLeftTopPoint!.x , y: chartLeftTopPoint!.y + priceOffsetY));
                 avePath.addLine(to: CGPoint(x: chartLeftTopPoint!.x , y: chartLeftTopPoint!.y + avePriceOffsetY));
             }else {
-//                let preObj = realDataArr[idx - 1];
+//              let preObj = realDataArr[idx - 1];
                 timePath.move(to: prePricePoint);
                 avePath.move(to: preAvePoint);
                 preAvePoint = CGPoint(x: chartLeftTopPoint!.x + itemWidth * CGFloat(idx), y: chartLeftTopPoint!.y + avePriceOffsetY);
                 prePricePoint = CGPoint(x: chartLeftTopPoint!.x + itemWidth * CGFloat(idx), y: chartLeftTopPoint!.y + priceOffsetY);
                 preAvePoint = adjustPoint(point: preAvePoint);
                 prePricePoint = adjustPoint(point: prePricePoint);
-//                let isSame = XStockHelper.isSameDay(interval1: idxObj.timeInterval, interval2: preObj.timeInterval);
                 if !idxObj.broken {
                     timePath.addLine(to: prePricePoint);
                     avePath.addLine(to: preAvePoint);

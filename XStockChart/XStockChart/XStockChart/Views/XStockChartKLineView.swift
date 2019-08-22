@@ -45,16 +45,87 @@ class XStockChartKLineView: UIView {
     ///左侧显示的最小价格
     var minPrice : CGFloat?;
     
+    ///涨的成交量柱子
+    lazy var upKLayer: CAShapeLayer = {
+        let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
+        layer.strokeColor = XStockColor.upColor().cgColor;
+        return layer;
+    }()
+    
+    ///跌得成交量柱子
+    lazy var downKLayer: CAShapeLayer = {
+        let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
+        layer.strokeColor = XStockColor.downColor().cgColor;
+        return layer;
+    }()
+    
+    ///MA5线
+    lazy var MA5Layer: CAShapeLayer = {
+        let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
+        layer.fillColor = UIColor.clear.cgColor;
+        layer.strokeColor = XStockColor.getColor(hex: XStock_MA5Color).cgColor;
+        return layer;
+    }()
+    ///MA10线
+    lazy var MA10Layer: CAShapeLayer = {
+        let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
+        layer.fillColor = UIColor.clear.cgColor;
+        layer.strokeColor = XStockColor.getColor(hex: XStock_MA10Color).cgColor;
+        return layer;
+    }()
+    ///MA20线
+    lazy var MA20Layer: CAShapeLayer = {
+        let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
+        layer.fillColor = UIColor.clear.cgColor;
+        layer.strokeColor = XStockColor.getColor(hex: XStock_MA20Color).cgColor;
+        return layer;
+    }()
+    ///MA30线
+    lazy var MA30Layer: CAShapeLayer = {
+        let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
+        layer.fillColor = UIColor.clear.cgColor;
+        layer.strokeColor = XStockColor.getColor(hex: XStock_MA30Color).cgColor;
+        return layer;
+    }()
+    ///MA60线
+    lazy var MA60Layer: CAShapeLayer = {
+        let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
+        layer.fillColor = UIColor.clear.cgColor;
+        layer.strokeColor = XStockColor.getColor(hex: XStock_MA60Color).cgColor;
+        return layer;
+    }()
+    
+    ///显示MA的layer
+    lazy var MATextLayer: CATextLayer = {
+        let layer = CATextLayer.init();
+        layer.contentsScale = XStockContentScale;
+        layer.fontSize = 9.0;
+        layer.alignmentMode = CATextLayerAlignmentMode.left;
+        layer.frame = CGRect(x: 10.0, y: -15.0, width: self.chartWidth! - 20, height: 15);
+        return layer;
+    }()
+    
+    
+    
     
     ///成交量中涨layer
     lazy var upVolumeLayer: CAShapeLayer = {
         let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
         layer.strokeColor = XStockColor.upColor().cgColor;
         return layer;
     }()
     ///成交量中跌layer
     lazy var downVolumeLayer: CAShapeLayer = {
         let layer = CAShapeLayer.init();
+        layer.lineWidth = 1.0;
         layer.strokeColor = XStockColor.downColor().cgColor;
         return layer;
     }()
@@ -95,6 +166,11 @@ class XStockChartKLineView: UIView {
         return tap;
     }()
     
+    
+    
+    
+    
+    
     lazy var infoTimeLayer: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
@@ -121,17 +197,6 @@ class XStockChartKLineView: UIView {
     }()
     
     
-    
-    lazy var infoPctLayer: CATextLayer = {
-        let layer = CATextLayer.init();
-        layer.contentsScale = XStockContentScale;
-        layer.fontSize = 9.0;
-        layer.alignmentMode = CATextLayerAlignmentMode.right;
-        layer.borderWidth = 1.0;
-        layer.backgroundColor = XStockColor.getTimeInfoLayerBackColor().cgColor;
-        layer.isHidden = true;
-        return layer;
-    }()
     
     
     lazy var infoBar: XStockTimeInfoBar = {
@@ -225,24 +290,7 @@ class XStockChartKLineView: UIView {
     }()
     
     
-    lazy var priceCircleLayer: CAShapeLayer = {
-        let layer = CAShapeLayer.init();
-        layer.isHidden = true;
-        layer.fillColor = XStockColor.getColor(hex: XStock_Time_FiveFillColor).cgColor;
-        layer.strokeColor = XStockColor.getTimeLineColor().cgColor;
-        layer.lineWidth = 0.7;
-        return layer;
-    }()
-    
-    lazy var avePriceCirleLayer: CAShapeLayer = {
-        let layer = CAShapeLayer.init();
-        layer.isHidden = true;
-        layer.fillColor = XStockColor.getColor(hex: XStock_AveFillColor).cgColor;
-        layer.strokeColor = XStockColor.getAveLineColor().cgColor;
-        layer.lineWidth = 0.7;
-        return layer;
-    }()
-    
+
     
     
     
@@ -314,12 +362,15 @@ class XStockChartKLineView: UIView {
             i += 1;
             j -= 1;
         }
+        ///价格放大缩小, 不绘制到顶部或者底部
+        maxPrice = maxPrice! * 1.1;
+        minPrice = minPrice! * 0.9;
         avePrice = (maxPrice! + minPrice!) / 2.0;
         itemWidth = chartWidth! / CGFloat(itemCount);
-//        setupText();
         setupVolumeLines();
-        setupDownTimeLayers()
-        setTextConent()
+        setupDownTimeLayers();
+        setupKAndMAChart();
+        setTextConent();
     }
     
 
@@ -328,15 +379,6 @@ class XStockChartKLineView: UIView {
     
     ///初始化时调用一次
     func addLayers() {
-        if XStockHelper.getScreenDeriction() == .PortraitScreen {
-            if XStockGlobal.share.alwaysShowVolumeDes == true {
-                self.layer.addSublayer(volumeDesLayer);
-                self.layer.addSublayer(volumeLayer);
-            }
-        }else {
-            self.layer.addSublayer(volumeDesLayer);
-            self.layer.addSublayer(volumeLayer);
-        }
         self.layer.addSublayer(downTimeLayer1);
         self.layer.addSublayer(downTimeLayer2);
         self.layer.addSublayer(downTimeLayer3);
@@ -349,11 +391,26 @@ class XStockChartKLineView: UIView {
         self.layer.addSublayer(downVolumeLayer);
         self.layer.addSublayer(vCrossLineLayer);
         self.layer.addSublayer(hCrossLineLayer);
-        self.layer.addSublayer(infoPctLayer);
+        self.layer.addSublayer(upKLayer);
+        self.layer.addSublayer(downKLayer);
+        self.layer.addSublayer(MA5Layer);
+        self.layer.addSublayer(MA10Layer);
+        self.layer.addSublayer(MA20Layer);
+        self.layer.addSublayer(MA30Layer);
+        self.layer.addSublayer(MA60Layer);
+        self.layer.addSublayer(MATextLayer);
         self.layer.addSublayer(infoTimeLayer);
         self.layer.addSublayer(infoPriceLayer);
-        self.layer.addSublayer(priceCircleLayer);
-        self.layer.addSublayer(avePriceCirleLayer);
+
+        if XStockHelper.getScreenDeriction() == .PortraitScreen {
+            if XStockGlobal.share.alwaysShowVolumeDes == true {
+                self.layer.addSublayer(volumeDesLayer);
+                self.layer.addSublayer(volumeLayer);
+            }
+        }else {
+            self.layer.addSublayer(volumeDesLayer);
+            self.layer.addSublayer(volumeLayer);
+        }
     }
     
     
@@ -421,12 +478,12 @@ class XStockChartKLineView: UIView {
         volumeDesLayer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
         if XStockHelper.getScreenDeriction() == .LandscapeScreen {
             volumeDesLayer.frame = CGRect(x:volumeLetTopPoint!.x - 40.0 , y: volumeLetTopPoint!.y + XStockGlobal.share.volumeHeihgt - 20.0, width: 40.0, height: 12.0);
-            volumeLayer.frame = CGRect(x:volumeLetTopPoint!.x - 40.0 , y: volumeLetTopPoint!.y , width: 40.0, height: 12.0);
+            volumeLayer.frame = CGRect(x:volumeLetTopPoint!.x - 50.0 , y: volumeLetTopPoint!.y , width: 50.0, height: 12.0);
             volumeLayer.alignmentMode = .right;
             volumeDesLayer.alignmentMode = .right;
         }else {
             volumeDesLayer.frame = CGRect(x:volumeLetTopPoint!.x + 1 , y: volumeLetTopPoint!.y + XStockGlobal.share.volumeHeihgt - 14, width: 40.0, height: 12.0);
-            volumeLayer.frame = CGRect(x:volumeLetTopPoint!.x + 1 , y: volumeLetTopPoint!.y + 1.0 , width: 40.0, height: 12.0);
+            volumeLayer.frame = CGRect(x:volumeLetTopPoint!.x + 1 , y: volumeLetTopPoint!.y + 1.0 , width: 50.0, height: 12.0);
             volumeLayer.alignmentMode = .left;
             volumeDesLayer.alignmentMode = .left;
         }
@@ -466,52 +523,167 @@ class XStockChartKLineView: UIView {
             return;
         }
         ///右侧留下20%(不让各个线挨着)
-        if XStockGlobal.share.kLineColumeType == .Solid {
-            upVolumeLayer.lineWidth = itemWidth! * 0.8;
-            downVolumeLayer.lineWidth = itemWidth! * 0.8;
-        }else {
-            upVolumeLayer.lineWidth = 1;
-            downVolumeLayer.lineWidth = 1;
-            upVolumeLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
-            downVolumeLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
-        }
         let volumeLeftDownPoint = CGPoint(x: volumeLetTopPoint!.x, y: volumeLetTopPoint!.y + XStockGlobal.share.volumeHeihgt);
         let upPath = UIBezierPath.init();
         let downPath = UIBezierPath.init();
-        let avePath = UIBezierPath.init();
         for idx in 0...realDataArr.count - 1 {
             let idxObj : XStockKLineModel = realDataArr[idx];
-            let idxV : CGFloat = XStockHelper.getCGFloat(str: idxObj.volume)
             let offsetY = XStockHelper.getCGFloat(str: idxObj.volume) / maxVolume! * XStockGlobal.share.volumeHeihgt;
             let open : CGFloat = XStockHelper.getCGFloat(str: idxObj.open);
             let close : CGFloat = XStockHelper.getCGFloat(str: idxObj.close);
             if open < close  {
+                upPath.move(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
+                upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y ));
+                upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
+                upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x  + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
+                upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
                 if XStockGlobal.share.kLineColumeType == .Solid {
-                    upPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.5, y: volumeLeftDownPoint.y))
-                    upPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth!  + itemWidth! * 0.5, y: volumeLeftDownPoint.y - offsetY))
+                    upVolumeLayer.fillColor = upVolumeLayer.strokeColor;
                 }else {
-                    upPath.move(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
-                    upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y ));
-                    upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
-                    upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x  + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
-                    upPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
+                    upVolumeLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
                 }
+                upPath.fill();
             }else  {
+                downPath.move(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
+                downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y ));
+                downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
+                downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x  + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
+                downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
                 if XStockGlobal.share.kLineColumeType == .Solid {
-                    downPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.5, y: volumeLeftDownPoint.y))
-                    downPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth!  + itemWidth! * 0.5, y: volumeLeftDownPoint.y - offsetY))
+                    downVolumeLayer.fillColor = downVolumeLayer.strokeColor;
                 }else {
-                    downPath.move(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
-                    downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y ));
-                    downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
-                    downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x  + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y - offsetY));
-                    downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
+                    downVolumeLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
                 }
+                downPath.fill();
             }
         }
         upVolumeLayer.path = upPath.cgPath;
         downVolumeLayer.path = downPath.cgPath;
     }
+    
+    
+    ///绘制K线的蜡烛图
+    func setupKAndMAChart()  {
+        guard realDataArr.count > 0 else {
+            return;
+        }
+        ///右侧留下20%(不让各个线挨着)
+        let upPath = UIBezierPath.init();
+        let downPath = UIBezierPath.init();
+        let MA5Path = UIBezierPath.init();
+        let MA10Path = UIBezierPath.init();
+        let MA20Path = UIBezierPath.init();
+        let MA30Path = UIBezierPath.init();
+        let MA60Path = UIBezierPath.init();
+        var MA5Moved = false;
+        var MA10Moved = false;
+        var MA20Moved = false;
+        var MA30Moved = false;
+        var MA60Moved = false;
+        for idx in 0...realDataArr.count - 1 {
+            let idxObj : XStockKLineModel = realDataArr[idx];
+            let open : CGFloat = XStockHelper.getCGFloat(str: idxObj.open);
+            let close : CGFloat = XStockHelper.getCGFloat(str: idxObj.close);
+            let offsetHigh : CGFloat = XStockHelper.getOffsetY(price: XStockHelper.getCGFloat(str: idxObj.high), minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!);
+            let offsetLow : CGFloat = XStockHelper.getOffsetY(price: XStockHelper.getCGFloat(str: idxObj.low), minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!);
+            let offsetOpen : CGFloat = XStockHelper.getOffsetY(price: open, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!);
+            let offsetClose : CGFloat = XStockHelper.getOffsetY(price: close, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!);
+            if open <= close  {
+                upPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth!, y: offsetOpen));
+                upPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.8, y: offsetOpen));
+                upPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.8, y: offsetClose));
+                upPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! , y: offsetClose));
+                upPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth!, y: offsetOpen));
+                if XStockGlobal.share.kLineColumeType == .Solid {
+                    upKLayer.fillColor = upKLayer.strokeColor;
+                }else {
+                    upKLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
+                }
+                upPath.fill();
+                upPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetOpen));
+                upPath.addLine(to:CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetLow));
+                upPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetClose));
+                upPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetHigh));
+            }else  {
+                downPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth!, y: offsetClose));
+                downPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.8, y: offsetClose));
+                downPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.8, y: offsetOpen));
+                downPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! , y: offsetOpen));
+                downPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth!, y: offsetClose));
+                if XStockGlobal.share.kLineColumeType == .Solid {
+                    downKLayer.fillColor = downKLayer.strokeColor;
+                }else {
+                    downKLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
+                }
+                downPath.fill();
+                downPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetClose));
+                downPath.addLine(to:CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetLow));
+                downPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetOpen));
+                downPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetHigh));
+            }
+            
+            if MA5Moved {
+                if idxObj.MA5 != nil {
+                    MA5Path.addLine(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA5!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                }
+            }else {
+                if idxObj.MA5 != nil {
+                    MA5Path.move(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA5!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                    MA5Moved = true;
+                }
+            }
+            if MA10Moved {
+                if idxObj.MA10 != nil {
+                    MA10Path.addLine(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA10!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                }
+            }else {
+                if idxObj.MA10 != nil {
+                    MA10Path.move(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA10!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                    MA10Moved = true;
+                }
+            }
+            if MA20Moved {
+                if idxObj.MA20 != nil {
+                    MA20Path.addLine(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA20!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                }
+            }else {
+                if idxObj.MA20 != nil {
+                    MA20Path.move(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA20!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                    MA20Moved = true;
+                }
+            }
+            if MA30Moved {
+                if idxObj.MA30 != nil {
+                    MA30Path.addLine(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA30!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                }
+            }else {
+                if idxObj.MA30 != nil {
+                    MA30Path.move(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA30!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                    MA30Moved = true;
+                }
+            }
+            if MA60Moved {
+                if idxObj.MA60 != nil {
+                    MA60Path.addLine(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA60!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                }
+            }else {
+                if idxObj.MA60 != nil {
+                    MA60Path.move(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA60!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
+                    MA60Moved = true;
+                }
+            }
+        }
+        upKLayer.path = upPath.cgPath;
+        downKLayer.path = downPath.cgPath;
+        MA5Layer.path = MA5Path.cgPath;
+        MA10Layer.path = MA10Path.cgPath;
+        MA20Layer.path = MA20Path.cgPath;
+        MA30Layer.path = MA30Path.cgPath;
+        MA60Layer.path = MA60Path.cgPath;
+    }
+    
+    
+    
     
     
     ///设置显示内容,图表周边的价格, 成交量, 百分比等信息
@@ -529,7 +701,45 @@ class XStockChartKLineView: UIView {
         }
         volumeLayer.string = volumeCountStr;
         volumeDesLayer.string = volumeDesStr;
+        
+        if  realDataArr.count > 0 {
+            let lastObj : XStockKLineModel = realDataArr.last!;
+            setupMATextContent(obj: lastObj);
+        }
     }
+    
+    
+    func setupMATextContent(obj:XStockKLineModel!)  {
+        var muStr  :  NSMutableAttributedString?;
+        let MA5Str   = "MA5:" + XStockHelper.getFormatNumStr(num: obj.MA5, dotCount: priceDotCount);
+        let MA10Str  = "  MA10:" + XStockHelper.getFormatNumStr(num: obj.MA10, dotCount: priceDotCount);
+        let MA20Str  = "  MA20:" + XStockHelper.getFormatNumStr(num: obj.MA20, dotCount: priceDotCount);
+        let MA30Str  = "  MA30:" + XStockHelper.getFormatNumStr(num: obj.MA30, dotCount: priceDotCount);
+        let MA60Str  = "  MA60:" + XStockHelper.getFormatNumStr(num: obj.MA60, dotCount: priceDotCount);
+        if XStockHelper.getScreenDeriction() == .PortraitScreen && UIDevice.current.userInterfaceIdiom == .phone {
+            muStr = NSMutableAttributedString.init(string: "MA   " + MA5Str + MA10Str + MA20Str);
+        }else {
+            muStr = NSMutableAttributedString.init(string: "MA   " + MA5Str + MA10Str + MA20Str + MA30Str + MA60Str);
+        }
+        let desRange = muStr!.string.range(of: String("MA   "));
+        let MA5Range = muStr!.string.range(of: MA5Str);
+        let MA10Range = muStr!.string.range(of: MA10Str);
+        let MA20Range = muStr!.string.range(of: MA20Str);
+        let MA30Range = muStr!.string.range(of: MA30Str);
+        let MA60Range = muStr!.string.range(of: MA60Str);
+        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.xStock_TextColor().cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(desRange!));
+        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA5Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA5Range!));
+        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA10Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA10Range!));
+        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA20Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA20Range!));
+        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA30Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA30Range!));
+        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA60Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA60Range!));
+        MATextLayer.string = muStr!;
+    }
+    
+    
+    
+    
+    
     
     ///绘制分时时如果popint不再图表区域内的话, 就把他放在边上
     func adjustPoint(point:CGPoint) -> CGPoint {
@@ -560,15 +770,16 @@ class XStockChartKLineView: UIView {
         var  thePoint = sender.location(in: self);
         thePoint = adjustCroseeCurvePoint(point: thePoint).realPoint;
         let idx = adjustCroseeCurvePoint(point: thePoint).idx;
+        if realDataArr.count > idx {
+            let obj = realDataArr[idx];
+            setupMATextContent(obj: obj);
+        }
         if sender.state == .began {
             vCrossLineLayer.isHidden = false;
             hCrossLineLayer.isHidden = false;
             infoPriceLayer.isHidden = false;
             infoTimeLayer.isHidden = false;
-            infoPctLayer.isHidden = false;
             infoBar.isHidden = false;
-            priceCircleLayer.isHidden = false;
-            avePriceCirleLayer.isHidden = false;
             showCrossLine(point: thePoint, show: true);
             showInfoLayers(point: thePoint, idx: idx, show: true);
             showBar(point: thePoint, idx: idx, show: true);
@@ -583,6 +794,10 @@ class XStockChartKLineView: UIView {
                 self.showCrossLine(point: thePoint, show: false);
                 self.showInfoLayers(point: thePoint, idx: idx, show: false);
                 self.showBar(point: thePoint, idx: idx, show: false);
+                if self.realDataArr.count > 0 {
+                    let obj = self.realDataArr.last;
+                    self.setupMATextContent(obj: obj);
+                }
             }
         }
     }
@@ -651,7 +866,6 @@ class XStockChartKLineView: UIView {
                     let priceSize = XStockHelper.getStrSize(str: priceStr, fontSize: 9.0)
                     let priceOrigin = CGPoint(x: 0, y: point.y - priceSize.height / 2.0);
                     infoPriceLayer.frame.origin = priceOrigin;
-                    //                    infoPriceLayer.frame.size = priceSize;
                     infoPriceLayer.frame.size = CGSize(width: 30, height: priceSize.height);
                     infoPriceLayer.string = priceStr;
                     infoPriceLayer.isHidden = false;
@@ -669,7 +883,6 @@ class XStockChartKLineView: UIView {
                     let volOrigin = CGPoint(x: 0, y: point.y - volSize.height / 2.0);
                     infoPriceLayer.frame.origin = volOrigin;
                     infoPriceLayer.frame.size = volSize;
-                    //                    infoPriceLayer.frame.size = CGSize(width: 30, height: volSize.height);
                     infoPriceLayer.string = volStr;
                     infoPriceLayer.isHidden = false;
                 }
@@ -678,7 +891,6 @@ class XStockChartKLineView: UIView {
         }else {
             infoPriceLayer.isHidden = true;
             infoTimeLayer.isHidden = true;
-            infoPctLayer.isHidden = true;
         }
     }
     
@@ -716,36 +928,11 @@ class XStockChartKLineView: UIView {
             resultPoint = CGPoint(x: getX, y: getY);
         }
         print("idxX的值 \(CGFloat(idx) * itemWidth!)")
-        if XStockGlobal.share.kLineColumeType == .Solid {
-            resultPoint = CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.45, y: resultPoint.y);
-        }else {
-            resultPoint = CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.35, y: resultPoint.y);
-        }
+        resultPoint = CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.35, y: resultPoint.y);
         return (resultPoint, idx)
     }
     
-//    ////长按时价格线和均价线上的小圆
-//    func showCircles(point:CGPoint, idx:Int, show:Bool)  {
-//        if show {
-//            let idxObj : XStockTimeModel = realDataArr[idx] ;
-//            let price : CGFloat = XStockHelper.getCGFloat(str: idxObj.price);
-//            let avePrice : CGFloat = XStockHelper.getCGFloat(str: idxObj.avePrice);
-//            let priceOffsetY : CGFloat = XStockHelper.getOffsetY(price: price, minPrice: minPrice, maxPrice: maxPrice, height: chartHeight!);
-//            let avePriceOffsetY : CGFloat = XStockHelper.getOffsetY(price: avePrice, minPrice: minPrice, maxPrice: maxPrice, height: chartHeight!);
-//            let pricePoint = CGPoint(x: CGFloat(idx) * itemWidth, y: priceOffsetY);
-//            let avePricePoint = CGPoint(x: CGFloat(idx) * itemWidth, y: avePriceOffsetY);
-//            let pricePath : UIBezierPath = UIBezierPath.init(arcCenter: pricePoint, radius: 2.5, startAngle: 0, endAngle: CGFloat(Double.pi) * 2.0, clockwise: true);
-//            let avePricePath : UIBezierPath = UIBezierPath.init(arcCenter: avePricePoint, radius: 2.5, startAngle: 0, endAngle: CGFloat(Double.pi) * 2.0, clockwise: true);
-//            CATransaction.begin();
-//            CATransaction.setDisableActions(true);
-//            priceCircleLayer.path = pricePath.cgPath;
-//            avePriceCirleLayer.path = avePricePath.cgPath;
-//            CATransaction.commit();
-//        }else {
-//            priceCircleLayer.isHidden = true;
-//            avePriceCirleLayer.isHidden = true;
-//        }
-//    }
+
     
     ///渲染下方timeLayer的值
     func setupDownTimeLayers()  {
