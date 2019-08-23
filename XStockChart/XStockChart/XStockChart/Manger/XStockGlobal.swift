@@ -39,7 +39,7 @@ class XStockGlobal: NSObject {
     public var chartShowTypeArr : Array<XStockChartType> = [.Time, .Five, .Day, .Week, .Month];
     ///需要展示的图标列表对应的标题, 一定要跟上面数组对应
     public var chartShowTitleArr : Array<String> = ["分时", "五日", "日K", "周K", "月K"];
-    ///长按图表时出现的提示信息view, 默认在左右出现
+    ///长按图表时出现的提示信息view, 默认在左右出现--------后续删掉
     public var infoBarType : XStockLongPressInfoType = .SideBar;
     ///默认情况下竖屏时不显示  成交量的描述
     public var alwaysShowVolumeDes : Bool = true;

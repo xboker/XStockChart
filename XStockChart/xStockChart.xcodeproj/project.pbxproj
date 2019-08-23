@@ -28,6 +28,7 @@
 		7654201522E73E7600FDF5D9 /* XStockChartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654201422E73E7600FDF5D9 /* XStockChartUITests.swift */; };
 		7654202A22E7427900FDF5D9 /* XStockTimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654202922E7427900FDF5D9 /* XStockTimeModel.swift */; };
 		7654203022E743D400FDF5D9 /* XStockConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7654202F22E743D400FDF5D9 /* XStockConstant.swift */; };
+		765C8C6E230F9A2B00E90119 /* XStockKLineInfoBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765C8C6D230F9A2B00E90119 /* XStockKLineInfoBar.swift */; };
 		7667FD3A22EFF47E005522A8 /* five.json in Resources */ = {isa = PBXBuildFile; fileRef = 7667FD3522EFF47E005522A8 /* five.json */; };
 		7667FD3B22EFF47E005522A8 /* month.json in Resources */ = {isa = PBXBuildFile; fileRef = 7667FD3622EFF47E005522A8 /* month.json */; };
 		7667FD3C22EFF47E005522A8 /* time.json in Resources */ = {isa = PBXBuildFile; fileRef = 7667FD3722EFF47E005522A8 /* time.json */; };
@@ -81,6 +82,7 @@
 		7654201622E73E7600FDF5D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7654202922E7427900FDF5D9 /* XStockTimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XStockTimeModel.swift; sourceTree = "<group>"; };
 		7654202F22E743D400FDF5D9 /* XStockConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XStockConstant.swift; sourceTree = "<group>"; };
+		765C8C6D230F9A2B00E90119 /* XStockKLineInfoBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XStockKLineInfoBar.swift; sourceTree = "<group>"; };
 		7667FD3522EFF47E005522A8 /* five.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = five.json; sourceTree = "<group>"; };
 		7667FD3622EFF47E005522A8 /* month.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = month.json; sourceTree = "<group>"; };
 		7667FD3722EFF47E005522A8 /* time.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = time.json; sourceTree = "<group>"; };
@@ -223,8 +225,9 @@
 			children = (
 				7638E0FA22E7FFC60091CEA7 /* XStockChartTimeView.swift */,
 				764195C12301506E0065C2D0 /* XStockTimeInfoBar.swift */,
-				7638E10922E84DB00091CEA7 /* XStockContainTitleView.swift */,
 				76D96C7F230A7567006ED4A8 /* XStockChartKLineView.swift */,
+				765C8C6D230F9A2B00E90119 /* XStockKLineInfoBar.swift */,
+				7638E10922E84DB00091CEA7 /* XStockContainTitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				7638E0FB22E7FFC60091CEA7 /* XStockChartTimeView.swift in Sources */,
 				76541FF722E73E7500FDF5D9 /* ViewController.swift in Sources */,
 				7638E0FF22E8356B0091CEA7 /* XStockHelper.swift in Sources */,
+				765C8C6E230F9A2B00E90119 /* XStockKLineInfoBar.swift in Sources */,
 				7638E0F822E7FF4D0091CEA7 /* XStockEnum.swift in Sources */,
 				76541FF522E73E7500FDF5D9 /* AppDelegate.swift in Sources */,
 				764195C22301506E0065C2D0 /* XStockTimeInfoBar.swift in Sources */,

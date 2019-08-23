@@ -338,12 +338,6 @@ class XStockTimeInfoBar: CALayer {
     
     
     
-    func setupKlineContents(data:XStockKLineModel)  {
-        
-        
-        
-    }
-    
     
     
     

@@ -101,7 +101,6 @@ class XStockChartKLineView: UIView {
         layer.strokeColor = XStockColor.getColor(hex: XStock_MA60Color).cgColor;
         return layer;
     }()
-    
     ///显示MA的layer
     lazy var MATextLayer: CATextLayer = {
         let layer = CATextLayer.init();
@@ -111,10 +110,6 @@ class XStockChartKLineView: UIView {
         layer.frame = CGRect(x: 10.0, y: -15.0, width: self.chartWidth! - 20, height: 15);
         return layer;
     }()
-    
-    
-    
-    
     ///成交量中涨layer
     lazy var upVolumeLayer: CAShapeLayer = {
         let layer = CAShapeLayer.init();
@@ -165,12 +160,7 @@ class XStockChartKLineView: UIView {
         let tap = UILongPressGestureRecognizer.init(target: self, action: #selector(longPressAction(sender:)))
         return tap;
     }()
-    
-    
-    
-    
-    
-    
+    ///长按时十字线下方的时间信息layer
     lazy var infoTimeLayer: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
@@ -181,10 +171,7 @@ class XStockChartKLineView: UIView {
         layer.isHidden = true;
         return layer;
     }()
-    
-    
-    
-    
+    ///长按时十字线左侧的价格信息layer
     lazy var infoPriceLayer: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
@@ -195,106 +182,77 @@ class XStockChartKLineView: UIView {
         layer.isHidden = true;
         return layer;
     }()
-    
-    
-    
-    
-    lazy var infoBar: XStockTimeInfoBar = {
-        if XStockGlobal.share.infoBarType == XStockLongPressInfoType.SideBar {
-            let layer = XStockTimeInfoBar.init(frame: CGRect(x: 0, y: 0, width: 80.0, height: 100.0))
+    ///长按时弹出的信息bar
+    lazy var infoBar: XStockKLineInfoBar = {
+            let layer = XStockKLineInfoBar.init(frame: CGRect(x: 0, y: 0, width: 90.0, height: 130.0))
             layer.isHidden = true;
             self.layer.addSublayer(layer);
             return layer;
-        }else {
-            let layer = XStockTimeInfoBar.init(frame: CGRect(x: 0, y: 0, width: XScreenWidth - 10.0, height: 40.0));
-            let window  = UIApplication.shared.keyWindow;
-            let rect = self.convert(self.bounds, to: window);
-            layer.frame.origin = CGPoint(x: 5, y: rect.origin.y - 60.0);
-            window?.layer.addSublayer(layer);
-            layer.isHidden = true;
-            return layer;
-        }
     }()
-    
-    
-    
+    ///下方的时间信息1
     lazy var downTimeLayer1: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
         layer.fontSize = 9.0;
         layer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
         layer.alignmentMode = CATextLayerAlignmentMode.left;
-        layer.frame = CGRect(x: 0, y: chartHeight!, width: 30.0, height: 20.0);
+        layer.frame = CGRect(x: 0, y: chartHeight!, width: 40.0, height: 20.0);
         return layer;
     }()
-    
+    ///下方的时间信息2
     lazy var downTimeLayer2: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
         layer.fontSize = 9.0;
         layer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
         layer.alignmentMode = CATextLayerAlignmentMode.center;
-        layer.frame = CGRect(x: self.chartWidth! / 5.0 - 15.0, y: chartHeight!, width: 30.0, height: 20.0);
-        if self.showType == XStockChartType.Time {
-            layer.isHidden = true;
-        }else {
-            layer.isHidden = false;
-        }
+        layer.frame = CGRect(x: self.chartWidth! / 5.0 - 20.0, y: chartHeight!, width: 40.0, height: 20.0);
         return layer;
     }()
-    
+    ///下方的时间信息3
     lazy var downTimeLayer3: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
         layer.fontSize = 9.0;
         layer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
         layer.alignmentMode = CATextLayerAlignmentMode.center;
-        if self.showType == XStockChartType.Time {
-            layer.frame = CGRect(x: self.chartWidth! / 2.0  - 30.0, y: chartHeight!, width: 60.0, height: 20.0);
-        }else {
-            layer.frame = CGRect(x: self.chartWidth! / 5.0 * 2.0 - 15.0, y: chartHeight!, width: 30.0, height: 20.0);
-        }
+        layer.frame = CGRect(x: self.chartWidth! / 5.0 * 2.0 - 20.0, y: chartHeight!, width: 40.0, height: 20.0);
         return layer;
     }()
-    
-    
+    ///下方的时间信息4
     lazy var downTimeLayer4: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
         layer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
         layer.fontSize = 9.0;
         layer.alignmentMode = CATextLayerAlignmentMode.center;
-        layer.frame = CGRect(x: self.chartWidth! / 5.0 * 3 - 15.0, y: chartHeight!, width: 30.0, height: 20.0);
-        if self.showType == XStockChartType.Time {
-            layer.isHidden = true;
-        }else {
-            layer.isHidden = false;
-        }
+        layer.frame = CGRect(x: self.chartWidth! / 5.0 * 3 - 20.0, y: chartHeight!, width: 40.0, height: 20.0);
         return layer;
     }()
-    
-    
+    ///下方的时间信息5
     lazy var downTimeLayer5: CATextLayer = {
         let layer = CATextLayer.init();
         layer.contentsScale = XStockContentScale;
         layer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
         layer.fontSize = 9.0;
-        if self.showType == XStockChartType.Time {
-            layer.frame = CGRect(x: chartWidth! - 30.0, y: chartHeight!, width: 30.0, height: 20.0);
-            layer.alignmentMode = CATextLayerAlignmentMode.right;
-        }else {
-            layer.frame = CGRect(x: self.chartWidth! / 5.0 * 4 - 15.0, y: chartHeight!, width: 30.0, height: 20.0);
-            layer.alignmentMode = CATextLayerAlignmentMode.center;
-        }
+        layer.frame = CGRect(x: self.chartWidth! / 5.0 * 4 - 20.0, y: chartHeight!, width: 40.0, height: 20.0);
+        layer.alignmentMode = CATextLayerAlignmentMode.center;
+        return layer;
+    }()
+    ///下方的时间信息6
+    lazy var downTimeLayer6: CATextLayer = {
+        let layer = CATextLayer.init();
+        layer.contentsScale = XStockContentScale;
+        layer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
+        layer.fontSize = 9.0;
+        layer.frame = CGRect(x: self.chartWidth! - 40.0, y: chartHeight!, width: 40.0, height: 20.0);
+        layer.alignmentMode = CATextLayerAlignmentMode.right;
         return layer;
     }()
     
-    
 
     
-    
-    
-    
+    //MARK:-----------MethodBegin-----------
     ///初始化方法
     init(frame: CGRect,
          stkType:XStockType!,
@@ -384,6 +342,7 @@ class XStockChartKLineView: UIView {
         self.layer.addSublayer(downTimeLayer3);
         self.layer.addSublayer(downTimeLayer4);
         self.layer.addSublayer(downTimeLayer5);
+        self.layer.addSublayer(downTimeLayer6);
         self.layer.addSublayer(left1Layer);
         self.layer.addSublayer(left2Layer);
         self.layer.addSublayer(left3Layer);
@@ -401,7 +360,6 @@ class XStockChartKLineView: UIView {
         self.layer.addSublayer(MATextLayer);
         self.layer.addSublayer(infoTimeLayer);
         self.layer.addSublayer(infoPriceLayer);
-
         if XStockHelper.getScreenDeriction() == .PortraitScreen {
             if XStockGlobal.share.alwaysShowVolumeDes == true {
                 self.layer.addSublayer(volumeDesLayer);
@@ -807,24 +765,21 @@ class XStockChartKLineView: UIView {
         if  show {
             CATransaction.begin();
             CATransaction.setDisableActions(true);
-            if XStockGlobal.share.infoBarType == .SideBar {
-                if point.x > chartWidth! / 2.0 {
-                    infoBar.frame.origin = CGPoint(x: 30, y: 0)
-                }else {
-                    infoBar.frame.origin = CGPoint(x: chartWidth! - 30 - 80, y: 0);
-                }
+            if point.x > chartWidth! / 2.0 {
+                infoBar.frame.origin = CGPoint(x: 30.0, y: 0)
+            }else {
+                infoBar.frame.origin = CGPoint(x: chartWidth!  - 90.0, y: 0);
             }
             CATransaction.commit();
             if realDataArr.count > idx {
                 let model : XStockKLineModel = realDataArr[idx];
-//                infoBar.setupTimeContents(data: model, preClose: self.preClose, priceDot: priceDotCount);
+                infoBar.setupKLineContents(data: model, priceDot: priceDotCount);
             }
         }else {
             infoBar.isHidden = true;
         }
     }
-    
-    
+    ///长按十字线
     func showCrossLine(point:CGPoint, show:Bool)  {
         if show {
             ///关闭CALayer的隐式动画, 防止交叉线移动不及时(如果使用UIView直接更改Frame即可, 因为不触发隐式动画)
@@ -936,37 +891,30 @@ class XStockChartKLineView: UIView {
     
     ///渲染下方timeLayer的值
     func setupDownTimeLayers()  {
-        if self.showType == XStockChartType.Five {
-            if handler?.timeManager.fiveDayStrArr.count ?? 0 == 5 {
-                downTimeLayer1.string = handler?.timeManager.fiveDayStrArr[0];
-                downTimeLayer2.string = handler?.timeManager.fiveDayStrArr[1];
-                downTimeLayer3.string = handler?.timeManager.fiveDayStrArr[2];
-                downTimeLayer4.string = handler?.timeManager.fiveDayStrArr[3];
-                downTimeLayer5.string = handler?.timeManager.fiveDayStrArr[4];
-            }
-            return;
+        if realDataArr.count > 0 {
+           downTimeLayer1.string = XStockHelper.getTimeStr(interval: realDataArr[0].timeInterval).monthDateStr!;
         }
-        if self.stkType == XStockType.HK {
-            downTimeLayer1.string = "09:30";
-            downTimeLayer3.string = "12:00/13:00";
-            downTimeLayer5.string = "16:00";
-            return;
+        let sectionWidth = self.chartWidth! / 5.0;
+        let idx2 = lroundf(Float(sectionWidth / itemWidth!));
+        if realDataArr.count > idx2 {
+            downTimeLayer2.string = XStockHelper.getTimeStr(interval: realDataArr[idx2].timeInterval).monthDateStr!;
         }
-        if self.stkType == XStockType.HS {
-            downTimeLayer1.string = "09:30";
-            downTimeLayer3.string = "11:30/13:00";
-            downTimeLayer5.string = "15:00";
-            return;
+        let idx3 = lroundf(Float(sectionWidth * 2.0 / itemWidth!));
+        if realDataArr.count > idx3 {
+            downTimeLayer3.string = XStockHelper.getTimeStr(interval: realDataArr[idx3].timeInterval).monthDateStr!;
         }
-        if self.stkType == XStockType.US {
-            downTimeLayer1.string = "09:30";
-            downTimeLayer3.string = "12:00";
-            downTimeLayer5.string = "16:00";
-            return;
+        let idx4 = lroundf(Float(sectionWidth * 3.0 / itemWidth!));
+        if realDataArr.count > idx4 {
+            downTimeLayer4.string = XStockHelper.getTimeStr(interval: realDataArr[idx4].timeInterval).monthDateStr!;
         }
-        downTimeLayer1.string = "09:30";
-        downTimeLayer3.string = "12:00";
-        downTimeLayer5.string = "16:00";
+        let idx5 = lroundf(Float(sectionWidth * 4.0 / itemWidth!));
+        if realDataArr.count > idx5 {
+            downTimeLayer5.string = XStockHelper.getTimeStr(interval: realDataArr[idx5].timeInterval).monthDateStr!;
+        }
+        let idx6 = lroundf(Float(sectionWidth * 5.0 / itemWidth!));
+        if realDataArr.count > idx6 {
+            downTimeLayer6.string = XStockHelper.getTimeStr(interval: realDataArr[idx6].timeInterval).monthDateStr!;
+        }  
     }
     
     

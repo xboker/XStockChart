@@ -32,7 +32,7 @@ class XStockHelper: NSObject {
         return .IDX;
     }
 
-    ///特殊case: 港股价格:3位小数  沪深价格:2位小数  美股价格:>=1两位小数 <14位小数
+    ///特殊case: 港股价格:3位小数  沪深价格:2位小数  美股价格:>=1 2位小数 <1 4位小数
     class func getFormatNumStr(num:CGFloat?, dotCount:UInt8!) -> String {
         if num == nil {
             return "0.00";
