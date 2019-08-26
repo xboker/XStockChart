@@ -17,7 +17,10 @@ class XStockChartKLineView: UIView {
     var volumeLetTopPoint : CGPoint?;
     var chartWidth : CGFloat?;
     var chartHeight : CGFloat?;
-    
+    ///记录拖动K线图时的最后位置
+    var recordPoint : CGPoint?;
+    ///记录pinch时的比例
+    var recordWidth : CGFloat?;
     
     
     
@@ -140,6 +143,25 @@ class XStockChartKLineView: UIView {
         layer.isHidden = true;
         return layer
     }()
+    
+    ///当前数据的源
+    var allDataArr : Array<XStockKLineModel> {
+        get {
+            var dataArr : Array<XStockKLineModel>?;
+            if self.showType == XStockChartType.Day  {
+                dataArr = handler?.kLineManager.dayKChartDataArr;
+            }
+            if self.showType == XStockChartType.Week  {
+                dataArr = handler?.kLineManager.weekKChartDataArr;
+            }
+            if self.showType == XStockChartType.Month  {
+                dataArr = handler?.kLineManager.monthKChartDataArr;
+            }
+            return dataArr ?? [];
+        }
+    }
+    
+    
     ///价格的小数位数
     var priceDotCount : UInt8 {
         get {
@@ -249,8 +271,20 @@ class XStockChartKLineView: UIView {
         layer.alignmentMode = CATextLayerAlignmentMode.right;
         return layer;
     }()
+    ///拖动手势
+    lazy var panG: UIPanGestureRecognizer = {
+        let pan = UIPanGestureRecognizer.init(target: self, action: #selector(panAction(sender:)))
+        return pan;
+    }()
+    ///捏合手势
+    lazy var pinchG: UIPinchGestureRecognizer = {
+        let pan = UIPinchGestureRecognizer.init(target: self, action: #selector(pinchAction(sender:)));
+        return pan;
+    }()
     
-
+    
+    
+    
     
     //MARK:-----------MethodBegin-----------
     ///初始化方法
@@ -267,46 +301,62 @@ class XStockChartKLineView: UIView {
         self.setupTextLayers();
         self.addLayers();
         self.addGestureRecognizer(longTapG);
+        self.addGestureRecognizer(panG);
+        self.addGestureRecognizer(pinchG);
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    ///绘制方法
+    override func draw(_ layer: CALayer, in ctx: CGContext) {
+        UIGraphicsPushContext(ctx);  // 参数转化为当前上下文
+        
+        UIGraphicsPopContext(); // 恢复上下文环境。
+    }
+    
+    
+    
+    //MARK:绘制方法  获取数据成功, 拖动, 捏合之后重新计算
     ///获取数据成功, 拖动, 捏合之后重新计算
     func refreshAllContent()  {
-        var dataArr : Array<XStockKLineModel>?;
-        if self.showType == XStockChartType.Day  {
-            if handler?.kLineManager.dayKChartDataArr.count == 0 {
-                return;
-            }
-            dataArr = handler?.kLineManager.dayKChartDataArr;
-        }
-        if self.showType == XStockChartType.Week  {
-            if  handler?.kLineManager.weekKChartDataArr.count == 0 {
-                return;
-            }
-            dataArr = handler?.kLineManager.weekKChartDataArr;
-        }
-        if self.showType == XStockChartType.Month  {
-            if handler?.kLineManager.monthKChartDataArr.count == 0 {
-                return;
-            }
-            dataArr = handler?.kLineManager.monthKChartDataArr;
+//        var dataArr : Array<XStockKLineModel>?;
+//        if self.showType == XStockChartType.Day  {
+//            if handler?.kLineManager.dayKChartDataArr.count == 0 {
+//                return;
+//            }
+//            dataArr = handler?.kLineManager.dayKChartDataArr;
+//        }
+//        if self.showType == XStockChartType.Week  {
+//            if  handler?.kLineManager.weekKChartDataArr.count == 0 {
+//                return;
+//            }
+//            dataArr = handler?.kLineManager.weekKChartDataArr;
+//        }
+//        if self.showType == XStockChartType.Month  {
+//            if handler?.kLineManager.monthKChartDataArr.count == 0 {
+//                return;
+//            }
+//            dataArr = handler?.kLineManager.monthKChartDataArr;
+//        }
+        guard allDataArr.count > 0 else {
+            return;
         }
         let itemCount = handler!.kLineManager.showItemCount!;
-        if itemCount >= dataArr!.count {
-            realDataArr = dataArr!;
+        if itemCount >= allDataArr.count {
+            realDataArr = allDataArr;
         }else {
             if  handler!.kLineManager.lastPoint > itemCount {
-                realDataArr = Array(dataArr![handler!.kLineManager.lastPoint - itemCount...handler!.kLineManager.lastPoint]);
+                realDataArr = Array(allDataArr[handler!.kLineManager.lastPoint - itemCount + 1...handler!.kLineManager.lastPoint]);
             }else {
-                realDataArr = Array(dataArr![0...itemCount]);
+                realDataArr = Array(allDataArr[0...itemCount - 1]);
             }
         }
         var i = 0;
         var j = realDataArr.count - 1;
+        maxPrice = 0.0;
+        minPrice = 999999999999.0;
+        maxVolume = 0.0;
         while j >= i {
             let iHV = XStockHelper.getCGFloat(str: realDataArr[i].high);
             let jHV = XStockHelper.getCGFloat(str: realDataArr[j].high);
@@ -314,9 +364,21 @@ class XStockChartKLineView: UIView {
             let jLV = XStockHelper.getCGFloat(str: realDataArr[j].low);
             let iVV = XStockHelper.getCGFloat(str: realDataArr[i].volume);
             let jVV = XStockHelper.getCGFloat(str: realDataArr[j].volume);
-            maxPrice = max(iHV, max(jHV, maxPrice ?? 0.0));
-            minPrice = min(iLV, min(jLV, minPrice ?? 99999999999999.0));
-            maxVolume = max(iVV, max(jVV, maxVolume ?? 0.0));
+            if XStockHelper.getScreenDeriction() == .PortraitScreen && UIDevice.current.userInterfaceIdiom == .phone {
+                let maxIMA = max(realDataArr[i].MA5 ?? 0.0, max(realDataArr[i].MA10 ?? 0.0, realDataArr[i].MA20 ?? 0.0));
+                let maxJMA = max(realDataArr[j].MA5 ?? 0.0, max(realDataArr[j].MA10 ?? 0.0, realDataArr[j].MA20 ?? 0.0));
+                maxPrice = max(maxPrice!, max(jHV, iHV));
+                maxPrice = max(maxPrice!, max(maxIMA, maxJMA));
+            }else {
+                let maxIMA = max(realDataArr[i].MA5 ?? 0.0, max(realDataArr[i].MA10 ?? 0.0, max(realDataArr[i].MA20 ?? 0.0, max(realDataArr[i].MA30 ?? 0.0, realDataArr[i].MA60 ?? 0.0))));
+                let maxJMA = max(realDataArr[j].MA5 ?? 0.0, max(realDataArr[j].MA10 ?? 0.0, max(realDataArr[j].MA20 ?? 0.0, max(realDataArr[j].MA30 ?? 0.0, realDataArr[j].MA60 ?? 0.0))));
+                maxPrice = max(maxPrice!, max(jHV, iHV));
+                maxPrice = max(maxPrice!, max(maxIMA, maxJMA));
+            }
+            
+
+            minPrice = min(iLV, min(jLV, minPrice!));
+            maxVolume = max(iVV, max(jVV, maxVolume!));
             i += 1;
             j -= 1;
         }
@@ -343,9 +405,7 @@ class XStockChartKLineView: UIView {
         self.layer.addSublayer(downTimeLayer4);
         self.layer.addSublayer(downTimeLayer5);
         self.layer.addSublayer(downTimeLayer6);
-        self.layer.addSublayer(left1Layer);
-        self.layer.addSublayer(left2Layer);
-        self.layer.addSublayer(left3Layer);
+
         self.layer.addSublayer(upVolumeLayer);
         self.layer.addSublayer(downVolumeLayer);
         self.layer.addSublayer(vCrossLineLayer);
@@ -355,8 +415,14 @@ class XStockChartKLineView: UIView {
         self.layer.addSublayer(MA5Layer);
         self.layer.addSublayer(MA10Layer);
         self.layer.addSublayer(MA20Layer);
-        self.layer.addSublayer(MA30Layer);
-        self.layer.addSublayer(MA60Layer);
+        self.layer.addSublayer(left1Layer);
+        self.layer.addSublayer(left2Layer);
+        self.layer.addSublayer(left3Layer);
+        if XStockHelper.getScreenDeriction() != .PortraitScreen && UIDevice.current.userInterfaceIdiom != .phone {
+            self.layer.addSublayer(MA30Layer);
+            self.layer.addSublayer(MA60Layer);
+        }
+
         self.layer.addSublayer(MATextLayer);
         self.layer.addSublayer(infoTimeLayer);
         self.layer.addSublayer(infoPriceLayer);
@@ -500,7 +566,7 @@ class XStockChartKLineView: UIView {
                 }else {
                     upVolumeLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
                 }
-                upPath.fill();
+//                upPath.fill();
             }else  {
                 downPath.move(to: CGPoint(x: volumeLeftDownPoint.x + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y));
                 downPath.addLine(to: CGPoint(x: volumeLeftDownPoint.x + itemWidth! * 0.8 + CGFloat(idx) * itemWidth!, y: volumeLeftDownPoint.y ));
@@ -512,7 +578,7 @@ class XStockChartKLineView: UIView {
                 }else {
                     downVolumeLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
                 }
-                downPath.fill();
+//                downPath.fill();
             }
         }
         upVolumeLayer.path = upPath.cgPath;
@@ -557,7 +623,7 @@ class XStockChartKLineView: UIView {
                 }else {
                     upKLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
                 }
-                upPath.fill();
+//                upPath.fill();
                 upPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetOpen));
                 upPath.addLine(to:CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetLow));
                 upPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetClose));
@@ -573,7 +639,7 @@ class XStockChartKLineView: UIView {
                 }else {
                     downKLayer.fillColor = XStockColor.xStock_BackColor().cgColor;
                 }
-                downPath.fill();
+//                downPath.fill();
                 downPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetClose));
                 downPath.addLine(to:CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetLow));
                 downPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetOpen));
@@ -689,8 +755,11 @@ class XStockChartKLineView: UIView {
         muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA5Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA5Range!));
         muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA10Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA10Range!));
         muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA20Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA20Range!));
-        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA30Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA30Range!));
-        muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA60Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA60Range!));
+        if XStockHelper.getScreenDeriction() == .PortraitScreen && UIDevice.current.userInterfaceIdiom == .phone {
+        }else {
+            muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA30Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA30Range!));
+            muStr?.addAttributes([NSAttributedString.Key.foregroundColor : XStockColor.getColor(hex: XStock_MA60Color).cgColor, NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10)], range: muStr!.string.getNSRange(MA60Range!));
+        }
         MATextLayer.string = muStr!;
     }
     
@@ -723,7 +792,55 @@ class XStockChartKLineView: UIView {
         }
     }
     
-    //MARK:长按弹出相关信息
+    //MARK: 手势方法集合
+    ///滑动方法
+    @objc func panAction(sender : UIPanGestureRecognizer) {
+        if sender.state == UIPinchGestureRecognizer.State.began {
+            recordPoint = CGPoint.zero;
+        }
+        if sender.state == UIPinchGestureRecognizer.State.changed {
+            let point  = sender.translation(in: sender.view);
+            let offsetCount : Int = lroundf(Float((recordPoint!.x - point.x) / itemWidth!));
+            handler?.kLineManager.lastPoint += offsetCount;
+            if recordPoint!.x > point.x {
+                if handler!.kLineManager.lastPoint >= allDataArr.count - 1 {
+                    handler?.kLineManager.lastPoint = allDataArr.count - 1;
+                }
+            }else {
+                if handler!.kLineManager.lastPoint <= XStock_MinKLineCount {
+                    handler?.kLineManager.lastPoint = XStock_MinKLineCount;
+                }
+            }
+            refreshAllContent();
+            recordPoint = point;
+        }
+    }
+    
+    ///捏合手势
+    @objc func pinchAction(sender : UIPinchGestureRecognizer) {
+        print("捏合的比例 \(sender.scale)")
+        if sender.state == UIGestureRecognizer.State.began {
+            recordWidth = itemWidth!;
+        }
+        if sender.state == UIGestureRecognizer.State.changed {
+            let getWidth : CGFloat = recordWidth! * sender.scale * 0.8;
+            handler?.kLineManager.showItemCount = lroundf(Float(chartWidth! / getWidth));
+            print("现在显示的数量  \(handler?.kLineManager.showItemCount)");
+            if handler!.kLineManager.showItemCount! >=  XStock_MaxKLineCount {
+                handler?.kLineManager.showItemCount = XStock_MaxKLineCount;
+            }
+            if handler!.kLineManager.showItemCount! <= XStock_MinKLineCount {
+                handler?.kLineManager.showItemCount = XStock_MinKLineCount;
+            }
+            refreshAllContent();
+        }
+//        if sender.state == UIGestureRecognizer.State.changed {
+//            itemWidth =  recordWidth;
+//        }
+    }
+    
+    
+    ///长按弹出相关信息
     @objc func longPressAction(sender : UILongPressGestureRecognizer) {
         var  thePoint = sender.location(in: self);
         thePoint = adjustCroseeCurvePoint(point: thePoint).realPoint;

@@ -52,7 +52,7 @@ public let XStock_DefautKLintCount : Int = 100;
 ///横屏时默认K线显示数据数量
 public let XStock_MaxKLineCount : Int = 150;
 ///横屏时K线最小显示数据数量 (竖屏时, 默认显示这个数量)
-public let  XStock_MinKLineCount : Int = 60;
+public let  XStock_MinKLineCount : Int = 50;
 
 
 
