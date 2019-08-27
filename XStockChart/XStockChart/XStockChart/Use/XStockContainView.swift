@@ -15,7 +15,7 @@ private let Offset70 : CGFloat = 50.0;
 
 
 @objc protocol XStockContainViewDelegate {
-   @objc optional func xStockTapToBigChart(showType:XStockChartType) -> Void;
+   @objc optional func xStockChartTaped(showType:XStockChartType) -> Void;
 }
 
 
@@ -56,6 +56,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
             rect = CGRect(x: Offset20, y: Offset20 + XStock_ContainViewTitleHeight, width: self.bounds.width - Offset20 * 2.0, height: self.bounds.height - Offset20 * 2 - XStock_ContainViewTitleHeight);
         }
         let v = XStockChartTimeView.init(frame: rect!, stkType: self.stkType, preClose: self.preClose, showType: XStockChartType.Time, handler: self.handler);
+        v.isHidden = true;
         return v;
     }()
     
@@ -119,7 +120,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
 
     ///代理方法
     @objc func goToBigChart(sender:UITapGestureRecognizer)  {
-        self.delegate?.xStockTapToBigChart!(showType: self.showType);
+        self.delegate?.xStockChartTaped!(showType: self.showType);
     }
     
     
@@ -186,9 +187,8 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
                 }
             }
         }
-        if  XStockHelper.getScreenDeriction() != .LandscapeScreen {
-            self.addGestureRecognizer(tapG);
-        }
+        self.idxView?.isHidden = false;
+        self.addGestureRecognizer(tapG);
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -146,9 +146,9 @@ public let XStock_VolumePortraitHeight : CGFloat = 60.0;
 public let XStock_VolumeLandscapetHeight : CGFloat = 100.0;
 
 ///屏幕宽度
-public let XScreenWidth : CGFloat = UIScreen.main.bounds.size.width;
+public let XScreenWidth : CGFloat = UIScreen.main.bounds.width;
 ///屏幕高度
-public let XScreenHeight : CGFloat = UIScreen.main.bounds.size.height;
+public let XScreenHeight : CGFloat = UIScreen.main.bounds.height;
 ///图表容器中顶部按钮的高度
 public let XStock_ContainViewTitleHeight : CGFloat = 40.0;
 

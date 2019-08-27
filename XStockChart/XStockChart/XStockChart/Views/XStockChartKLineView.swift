@@ -430,7 +430,8 @@ class XStockChartKLineView: UIView {
         self.layer.addSublayer(linkLayer);
         self.layer.addSublayer(maxPriceLayer);
         self.layer.addSublayer(minPriceLayer);
-        if XStockHelper.getScreenDeriction() != .PortraitScreen && UIDevice.current.userInterfaceIdiom != .phone {
+        if XStockHelper.getScreenDeriction() == .PortraitScreen && UIDevice.current.userInterfaceIdiom == .phone {
+        }else {
             self.layer.addSublayer(MA30Layer);
             self.layer.addSublayer(MA60Layer);
         }
@@ -799,6 +800,7 @@ class XStockChartKLineView: UIView {
         if sender.state == UIPinchGestureRecognizer.State.changed {
             let point  = sender.translation(in: sender.view);
             let offsetCount : Int = lroundf(Float((recordPoint!.x - point.x) / itemWidth!));
+            print("触发拖动 \(point.x),  记录点 \(recordPoint!.x)");
             handler?.kLineManager.lastPoint += offsetCount;
             if recordPoint!.x > point.x {
                 if handler!.kLineManager.lastPoint >= allDataArr.count - 1 {

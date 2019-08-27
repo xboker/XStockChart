@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7625823D23150D4E00EC3919 /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7625823C23150D4E00EC3919 /* LandscapeViewController.swift */; };
+		76258245231521D400EC3919 /* UIDevice+RotateScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 76258244231521D400EC3919 /* UIDevice+RotateScreen.m */; };
 		7638E0F822E7FF4D0091CEA7 /* XStockEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7638E0F722E7FF4D0091CEA7 /* XStockEnum.swift */; };
 		7638E0FB22E7FFC60091CEA7 /* XStockChartTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7638E0FA22E7FFC60091CEA7 /* XStockChartTimeView.swift */; };
 		7638E0FF22E8356B0091CEA7 /* XStockHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7638E0FE22E8356B0091CEA7 /* XStockHelper.swift */; };
@@ -57,6 +58,9 @@
 
 /* Begin PBXFileReference section */
 		7625823C23150D4E00EC3919 /* LandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeViewController.swift; sourceTree = "<group>"; };
+		7625823F2315218B00EC3919 /* XStockChart-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XStockChart-Bridging-Header.h"; sourceTree = "<group>"; };
+		76258243231521D400EC3919 /* UIDevice+RotateScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+RotateScreen.h"; sourceTree = "<group>"; };
+		76258244231521D400EC3919 /* UIDevice+RotateScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+RotateScreen.m"; sourceTree = "<group>"; };
 		7638E0F722E7FF4D0091CEA7 /* XStockEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XStockEnum.swift; sourceTree = "<group>"; };
 		7638E0FA22E7FFC60091CEA7 /* XStockChartTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XStockChartTimeView.swift; sourceTree = "<group>"; };
 		7638E0FE22E8356B0091CEA7 /* XStockHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XStockHelper.swift; sourceTree = "<group>"; };
@@ -118,6 +122,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7625823E2315217C00EC3919 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				7625823F2315218B00EC3919 /* XStockChart-Bridging-Header.h */,
+				76258243231521D400EC3919 /* UIDevice+RotateScreen.h */,
+				76258244231521D400EC3919 /* UIDevice+RotateScreen.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		7638E10522E84B510091CEA7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +208,7 @@
 		7654202222E73EAE00FDF5D9 /* XStockChart */ = {
 			isa = PBXGroup;
 			children = (
+				7625823E2315217C00EC3919 /* Category */,
 				7667FD3422EFF47E005522A8 /* Data */,
 				7638E10622E84BE10091CEA7 /* Use */,
 				7638E10522E84B510091CEA7 /* Model */,
@@ -315,6 +330,7 @@
 				TargetAttributes = {
 					76541FF022E73E7500FDF5D9 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1030;
 					};
 					7654200422E73E7600FDF5D9 = {
 						CreatedOnToolsVersion = 10.0;
@@ -396,6 +412,7 @@
 				7654203022E743D400FDF5D9 /* XStockConstant.swift in Sources */,
 				7638E0FB22E7FFC60091CEA7 /* XStockChartTimeView.swift in Sources */,
 				76541FF722E73E7500FDF5D9 /* ViewController.swift in Sources */,
+				76258245231521D400EC3919 /* UIDevice+RotateScreen.m in Sources */,
 				7638E0FF22E8356B0091CEA7 /* XStockHelper.swift in Sources */,
 				765C8C6E230F9A2B00E90119 /* XStockKLineInfoBar.swift in Sources */,
 				7638E0F822E7FF4D0091CEA7 /* XStockEnum.swift in Sources */,
@@ -576,6 +593,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2NRT2R6HN7;
 				INFOPLIST_FILE = XStockChart/Info.plist;
@@ -587,6 +605,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xie.XStock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "XStockChart/XStockChart/Category/XStockChart-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -596,6 +616,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2NRT2R6HN7;
 				INFOPLIST_FILE = XStockChart/Info.plist;
@@ -606,6 +627,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xie.XStock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "XStockChart/XStockChart/Category/XStockChart-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

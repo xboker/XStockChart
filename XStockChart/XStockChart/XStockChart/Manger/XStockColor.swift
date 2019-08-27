@@ -10,11 +10,12 @@ import UIKit
 
 class XStockColor: NSObject {
 
-    //MARK:Private
+    ///获取颜色
     class func getColor(hex:UInt32) -> UIColor {
         return getColor(hex: hex, alpha: 1.0);
     }
     
+    ///获取颜色, 有透明度设置
     class func getColor(hex:UInt32, alpha:CGFloat) -> UIColor {
         let r = (hex >> 16) & 0xFF;
         let g = (hex >> 8) & 0xFF;

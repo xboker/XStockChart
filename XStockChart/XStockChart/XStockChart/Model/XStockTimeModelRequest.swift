@@ -59,7 +59,7 @@ class XStockTimeModelRequest: NSObject {
     var fiveDayStrArr : Array<String> = [];
     
     
-    ///获取分时数据
+    ///获取分时数据----实际使用应该是HTTP请求
     func getTimeData(callB:TimeGetDataBlock)  {
         let path = Bundle.main.path(forResource: "time", ofType: "json");
         let resultData = NSData.init(contentsOfFile: path!);
@@ -80,7 +80,7 @@ class XStockTimeModelRequest: NSObject {
         callB(false);
     }
     
-    ///获取五日数据
+    ///获取五日数据----实际使用应该是HTTP请求
     func getFiveTimeData(callB:TimeGetDataBlock)  {
         let path = Bundle.main.path(forResource: "five", ofType: "json");
         let resultData = NSData.init(contentsOfFile: path!);

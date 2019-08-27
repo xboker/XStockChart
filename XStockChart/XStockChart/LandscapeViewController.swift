@@ -13,10 +13,9 @@ class LandscapeViewController: UIViewController, XStockContainViewDelegate {
     var chartView : XStockContainView?;
     
     
-    init(stk:String!, preClose:String!, showType:XStockChartType, handler:XStockContainHandler!) {
+    init(stk:String!, preClose:String!, showType:XStockChartType) {
         super.init(nibName: nil, bundle: nil);
-        chartView = XStockContainView.init(frame: CGRect(x: 0, y: 20, width: XScreenWidth, height: XScreenHeight), stkCode: stk, delegate: self, preClose: "2.45", showType: showType);
-        chartView?.handler = handler;
+        chartView = XStockContainView.init(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 30), stkCode: stk, delegate: self, preClose: "2.45", showType: showType);
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -27,16 +26,23 @@ class LandscapeViewController: UIViewController, XStockContainViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true;
+        self.view.backgroundColor = UIColor.white;
         self.view.addSubview(chartView!)
         // Do any additional setup after loading the view.
     }
     
-
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated);
+//        AppDelegate.delegate.isLandScape = false;
+//        UIDevice.switch(UIInterfaceOrientation.portrait);
+//    }
+    
     //MARK:XStockContainViewDelegate
-    func xStockTapToBigChart(showType: XStockChartType) {
-        
-        
-        
+    func xStockChartTaped(showType: XStockChartType) {
+        AppDelegate.delegate.isLandScape = false;
+        UIDevice.switch(UIInterfaceOrientation.portrait);
+        self.dismiss(animated: true, completion: nil); 
     }
     
     /*

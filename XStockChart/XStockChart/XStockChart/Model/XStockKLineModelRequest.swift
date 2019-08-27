@@ -37,7 +37,7 @@ class XStockKLineModelRequest: NSObject {
         }
     }
     
-    ///获取日K数据
+    ///获取日K数据----实际使用应该是HTTP请求
     func getDayData(type:XStockGetDataType, callB:TimeGetDataBlock)  {
         if  type == .Default && dayKChartDataArr.count > 0 {
             lastPoint = dayKChartDataArr.count - 1;
@@ -66,7 +66,7 @@ class XStockKLineModelRequest: NSObject {
         callB(false);
     }
     
-    ///获取周K数据
+    ///获取周K数据----实际使用应该是HTTP请求
     func getWeekData(type:XStockGetDataType, callB:TimeGetDataBlock)  {
         if  type == .Default && weekKChartDataArr.count > 0 {
             lastPoint = weekKChartDataArr.count - 1;
@@ -95,7 +95,7 @@ class XStockKLineModelRequest: NSObject {
         callB(false);
     }
     
-    ///获取月K数据
+    ///获取月K数据----实际使用应该是HTTP请求
     func getMonthData(type:XStockGetDataType, callB:TimeGetDataBlock)  {
         if  type == .Default && monthKChartDataArr.count > 0 {
             lastPoint = monthKChartDataArr.count - 1;

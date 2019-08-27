@@ -11,8 +11,12 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    class var delegate:AppDelegate{
+        return UIApplication.shared.delegate as! AppDelegate;
+    }
+    
     var window: UIWindow?
-
+    var isLandScape = false;
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -41,6 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if self.isLandScape {
+            return UIInterfaceOrientationMask.landscapeRight;
+        }
+        return UIInterfaceOrientationMask.portrait;
+    }
 
 }
 
