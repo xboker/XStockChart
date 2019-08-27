@@ -20,7 +20,6 @@ protocol XStockContainTitleViewDelegate {
 
 class XStockContainTitleView: UIView {
 
-    
     init(titleArr:Array<String>!, frame:CGRect) {
         super.init(frame: frame);
         layoutBtns(titleArr: titleArr);

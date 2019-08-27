@@ -18,14 +18,7 @@ class ViewController: UIViewController, XStockContainViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let chartView = XStockContainView.init(frame: CGRect(x: 0, y: 100, width: XScreenWidth, height: 440), stkCode: "665.HK", delegate: self, preClose: "2.45", showType: .Time);
-        chartView.delegate = self;
         self.view.addSubview(chartView)
-        
-        
-//        let str = "撒饭大师傅";
-//        print("强制转换的结果: \(XStockHelper.getCGFloat(str: str))");
-//        print("强制转换的结果: \(str.CGFloatValue())");
-        
     }
 
 

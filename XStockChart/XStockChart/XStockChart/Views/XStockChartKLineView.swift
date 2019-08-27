@@ -21,9 +21,6 @@ class XStockChartKLineView: UIView {
     var recordPoint : CGPoint?;
     ///记录pinch时的比例
     var recordWidth : CGFloat?;
-    
-    
-    
     ///最高价
     lazy var left1Layer     = CATextLayer.init();
     ///均价
@@ -36,7 +33,6 @@ class XStockChartKLineView: UIView {
     lazy var volumeLayer    = CATextLayer.init();
     ///实际的当前屏幕显示的数据
     var realDataArr : Array<XStockKLineModel> = [];
-
     ///每个柱子区域宽度
     var itemWidth : CGFloat?;
     ///最大的成交量
@@ -47,7 +43,6 @@ class XStockChartKLineView: UIView {
     var avePrice : CGFloat?;
     ///左侧显示的最小价格
     var minPrice : CGFloat?;
-    
     ///涨的成交量柱子
     lazy var upKLayer: CAShapeLayer = {
         let layer = CAShapeLayer.init();
@@ -55,7 +50,6 @@ class XStockChartKLineView: UIView {
         layer.strokeColor = XStockColor.upColor().cgColor;
         return layer;
     }()
-    
     ///跌得成交量柱子
     lazy var downKLayer: CAShapeLayer = {
         let layer = CAShapeLayer.init();
@@ -63,7 +57,6 @@ class XStockChartKLineView: UIView {
         layer.strokeColor = XStockColor.downColor().cgColor;
         return layer;
     }()
-    
     ///MA5线
     lazy var MA5Layer: CAShapeLayer = {
         let layer = CAShapeLayer.init();
@@ -143,7 +136,6 @@ class XStockChartKLineView: UIView {
         layer.isHidden = true;
         return layer
     }()
-    
     ///当前数据的源
     var allDataArr : Array<XStockKLineModel> {
         get {
@@ -160,8 +152,6 @@ class XStockChartKLineView: UIView {
             return dataArr ?? [];
         }
     }
-    
-    
     ///价格的小数位数
     var priceDotCount : UInt8 {
         get {
@@ -305,10 +295,7 @@ class XStockChartKLineView: UIView {
         let pan = UIPinchGestureRecognizer.init(target: self, action: #selector(pinchAction(sender:)));
         return pan;
     }()
-    
-    
-    
-    
+
     
     //MARK:-----------MethodBegin-----------
     ///初始化方法
@@ -420,10 +407,6 @@ class XStockChartKLineView: UIView {
         setupTextConentLayers();
     }
     
-
-    
-    
-    
     ///初始化时调用一次
     func addLayers() {
         self.layer.addSublayer(downTimeLayer1);
@@ -465,8 +448,6 @@ class XStockChartKLineView: UIView {
         }
     }
     
-    
-    
     ///初始化时调用一次
     func setupBaseData()  {
         chartLeftTopPoint = CGPoint(x: 0, y: 0);
@@ -474,9 +455,6 @@ class XStockChartKLineView: UIView {
         chartHeight = bounds.height - XStockGlobal.share.volumeHeihgt - 20;
         volumeLetTopPoint = CGPoint(x: 0, y: bounds.height - XStockGlobal.share.volumeHeihgt)
     }
-    
-    
-    
     
     ///绘制网格线,  初始化时调用一次
     func setupGridLines()  {
@@ -520,7 +498,7 @@ class XStockChartKLineView: UIView {
         self.layer.addSublayer(dotLayer);
     }
     
-    ///图表上的文字相关, 初始化时调用一次
+    ///图表上的文字相关layer, 初始化时调用一次
     func setupTextLayers()  {
         volumeDesLayer.contentsScale = XStockContentScale;
         volumeLayer.contentsScale = XStockContentScale;
@@ -609,7 +587,6 @@ class XStockChartKLineView: UIView {
         downVolumeLayer.path = downPath.cgPath;
     }
     
-    
     ///绘制K线的蜡烛图
     func setupKAndMAChartLayers(maxHighIdx : Int, minLowIdx : Int)  {
         guard realDataArr.count > 0 else {
@@ -666,6 +643,7 @@ class XStockChartKLineView: UIView {
                 }
             }
             CATransaction.commit();
+            ///绘制K线蜡烛
             if open <= close  {
                 upPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth!, y: offsetOpen));
                 upPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.8, y: offsetOpen));
@@ -697,9 +675,7 @@ class XStockChartKLineView: UIView {
                 downPath.move(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetOpen));
                 downPath.addLine(to: CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.4, y: offsetHigh));
             }
-            
-            
-            
+            ///绘制MA数据
             if MA5Moved {
                 if idxObj.MA5 != nil {
                     MA5Path.addLine(to: CGPoint(x: itemWidth! * 0.4 + CGFloat(idx) * itemWidth!, y: XStockHelper.getOffsetY(price: idxObj.MA5!, minPrice: minPrice!, maxPrice: maxPrice!, height: chartHeight!)));
@@ -761,10 +737,6 @@ class XStockChartKLineView: UIView {
         MA60Layer.path = MA60Path.cgPath;
     }
     
-    
-    
-    
-    
     ///设置显示内容,图表周边的价格, 成交量, 百分比等信息
     func setupTextConentLayers()  {
         ///上方图表相关
@@ -787,7 +759,7 @@ class XStockChartKLineView: UIView {
         }
     }
     
-    
+    ///设置MA数据显示的layer
     func setupMATextContent(obj:XStockKLineModel!)  {
         var muStr  :  NSMutableAttributedString?;
         let MA5Str   = "MA5:" + XStockHelper.getFormatNumStr(num: obj.MA5, dotCount: priceDotCount);
@@ -818,35 +790,6 @@ class XStockChartKLineView: UIView {
         MATextLayer.string = muStr!;
     }
     
-    
-    
-    
-    
-    
-    ///绘制分时时如果popint不再图表区域内的话, 就把他放在边上
-    func adjustPoint(point:CGPoint) -> CGPoint {
-        let rect = CGRect(x: chartLeftTopPoint!.x, y: chartLeftTopPoint!.y, width: chartWidth!, height: chartHeight!);
-        if rect.contains(point) {
-            return point;
-        }else {
-            var getX = point.x;
-            var getY = point.y;
-            if  point.x >= rect.maxX{
-                getX = rect.maxX;
-            }
-            if  point.x <= rect.minX{
-                getX = rect.minX;
-            }
-            if point.y >= rect.maxY {
-                getY = rect.maxY;
-            }
-            if  point.y <= rect.minY {
-                getY = rect.minY;
-            }
-            return CGPoint(x: getX, y: getY);
-        }
-    }
-    
     //MARK: 手势方法集合
     ///滑动方法
     @objc func panAction(sender : UIPanGestureRecognizer) {
@@ -873,14 +816,12 @@ class XStockChartKLineView: UIView {
     
     ///捏合手势
     @objc func pinchAction(sender : UIPinchGestureRecognizer) {
-        print("捏合的比例 \(sender.scale)")
         if sender.state == UIGestureRecognizer.State.began {
             recordWidth = itemWidth!;
         }
         if sender.state == UIGestureRecognizer.State.changed {
             let getWidth : CGFloat = recordWidth! * sender.scale * 0.8;
             handler?.kLineManager.showItemCount = lroundf(Float(chartWidth! / getWidth));
-            print("现在显示的数量  \(handler?.kLineManager.showItemCount)");
             if handler!.kLineManager.showItemCount! >=  XStock_MaxKLineCount {
                 handler?.kLineManager.showItemCount = XStock_MaxKLineCount;
             }
@@ -890,7 +831,6 @@ class XStockChartKLineView: UIView {
             refreshAllContent();
         }
     }
-    
     
     ///长按弹出相关信息
     @objc func longPressAction(sender : UILongPressGestureRecognizer) {
@@ -948,7 +888,8 @@ class XStockChartKLineView: UIView {
             infoBar.isHidden = true;
         }
     }
-    ///长按十字线
+    
+    ///长按弹出十字线
     func showCrossLine(point:CGPoint, show:Bool)  {
         if show {
             ///关闭CALayer的隐式动画, 防止交叉线移动不及时(如果使用UIView直接更改Frame即可, 因为不触发隐式动画)
@@ -1018,6 +959,7 @@ class XStockChartKLineView: UIView {
         }
     }
     
+    ///换算长按时弹出的point
     func adjustCroseeCurvePoint(point:CGPoint) -> (realPoint:CGPoint, idx:Int) {
         var resultPoint  = point;
         var idx = lroundf(Float(resultPoint.x / itemWidth!)) ;
@@ -1051,12 +993,9 @@ class XStockChartKLineView: UIView {
             }
             resultPoint = CGPoint(x: getX, y: getY);
         }
-        print("idxX的值 \(CGFloat(idx) * itemWidth!)")
         resultPoint = CGPoint(x: CGFloat(idx) * itemWidth! + itemWidth! * 0.35, y: resultPoint.y);
         return (resultPoint, idx)
     }
-    
-
     
     ///渲染下方timeLayer的值
     func setupDownTimeLayers()  {
@@ -1085,18 +1024,6 @@ class XStockChartKLineView: UIView {
             downTimeLayer6.string = XStockHelper.getTimeStr(interval: realDataArr[idx6].timeInterval).monthDateStr!;
         }  
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
-    
     
     
     

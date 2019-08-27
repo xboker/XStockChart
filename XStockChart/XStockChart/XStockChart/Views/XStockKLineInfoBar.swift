@@ -9,11 +9,13 @@
 import UIKit
 
 class XStockKLineInfoBar:  CALayer {
+    ///每个控件的高度
     var  controlHeight : CGFloat {
         get {
             return (self.bounds.height - 4.0) / 9.0;
         }
     };
+    
     lazy var left1: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0, width: 30.0, height: controlHeight)
@@ -25,6 +27,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "时间";
         return layer;
     }()
+    
     lazy var left2: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight , width: 30.0, height: controlHeight)
@@ -35,6 +38,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "开盘";
         return layer;
     }()
+    
     lazy var left3: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight * 2.0 , width: 30.0, height: controlHeight)
@@ -45,6 +49,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "最高";
         return layer;
     }()
+    
     lazy var left4: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight * 3.0 , width: 30.0, height: controlHeight)
@@ -55,6 +60,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "最低";
         return layer;
     }()
+    
     lazy var left5: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight * 4.0 , width: 30.0, height: controlHeight)
@@ -65,6 +71,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "收盘";
         return layer;
     }()
+    
     lazy var left6: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight * 5.0 , width: 30.0, height: controlHeight)
@@ -75,6 +82,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "涨跌额";
         return layer;
     }()
+    
     lazy var left7: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight * 6.0 , width: 30.0, height: controlHeight)
@@ -85,6 +93,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "涨跌幅";
         return layer;
     }()
+    
     lazy var left8: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight * 7.0 , width: 30.0, height: controlHeight)
@@ -95,6 +104,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "成交量";
         return layer;
     }()
+    
     lazy var left9: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2.0, y: 2.0 + controlHeight * 8.0 , width: 30.0, height: controlHeight)
@@ -105,6 +115,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.string = "成交额";
         return layer;
     }()
+    
     lazy var right1: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 20.0, y: 2.0  , width: 69.0, height: controlHeight)
@@ -113,6 +124,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right2: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight  , width: 58.0, height: controlHeight)
@@ -121,6 +133,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right3: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight * 2.0  , width: 58.0, height: controlHeight)
@@ -129,6 +142,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right4: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight * 3.0 , width: 58.0, height: controlHeight)
@@ -137,6 +151,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right5: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight * 4.0  , width: 58.0, height: controlHeight)
@@ -145,6 +160,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right6: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight * 5.0  , width: 58.0, height: controlHeight)
@@ -153,6 +169,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right7: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight * 6.0 , width: 58.0, height: controlHeight)
@@ -161,6 +178,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right8: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight * 7.0 , width: 58.0, height: controlHeight)
@@ -169,6 +187,7 @@ class XStockKLineInfoBar:  CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
+    
     lazy var right9: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 30.0, y: 2.0 + controlHeight * 8.0 , width: 58.0, height: controlHeight)
@@ -178,8 +197,7 @@ class XStockKLineInfoBar:  CALayer {
         return layer;
     }()
  
-    
-    
+    //MARK:----------MethodBegin----------
     init(frame:CGRect) {
         super.init();
         self.frame = frame;
@@ -212,9 +230,7 @@ class XStockKLineInfoBar:  CALayer {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-    
+    ///传入一个日/周/月K数据进行展示
     func setupKLineContents(data:XStockKLineModel?, priceDot:UInt8)  {
         guard data != nil  else {
             return;

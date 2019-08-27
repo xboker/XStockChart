@@ -9,11 +9,14 @@
 import UIKit
 
 class XStockTimeInfoBar: CALayer {
+   
+    ///每个控件的高度
     var  controlHeight : CGFloat {
         get {
             return (self.bounds.height - 4.0) / 7.0;
         }
     };
+    
     lazy var left1: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2, y: 2, width: 30, height: controlHeight)
@@ -37,7 +40,6 @@ class XStockTimeInfoBar: CALayer {
         return layer;
     }()
     
-    
     lazy var left3: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2, y: 2 + controlHeight * 2 , width: 30, height: controlHeight)
@@ -49,7 +51,6 @@ class XStockTimeInfoBar: CALayer {
         return layer;
     }()
     
-    
     lazy var left4: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 2, y: 2 + controlHeight * 3 , width: 30, height: controlHeight)
@@ -60,7 +61,6 @@ class XStockTimeInfoBar: CALayer {
         layer.string = "涨跌额";
         return layer;
     }()
-    
     
     lazy var left5: CATextLayer = {
         let layer = CATextLayer.init();
@@ -95,7 +95,6 @@ class XStockTimeInfoBar: CALayer {
         return layer;
     }()
     
-    
     lazy var right1: CATextLayer = {
         let layer = CATextLayer.init();
         layer.frame = CGRect(x: 31, y: 2  , width: 47, height: controlHeight)
@@ -113,7 +112,6 @@ class XStockTimeInfoBar: CALayer {
         layer.contentsScale = XStockContentScale;
         return layer;
     }()
-    
     
     lazy var right3: CATextLayer = {
         let layer = CATextLayer.init();
@@ -204,9 +202,7 @@ class XStockTimeInfoBar: CALayer {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-    
+    ///传入一个分时/五日数据进行展示
     func setupTimeContents(data:XStockTimeModel?, preClose:String?, priceDot:UInt8)  {
         guard data != nil && preClose != nil else {
             return;
@@ -232,9 +228,6 @@ class XStockTimeInfoBar: CALayer {
         let timeRange = realTimeStr.string.range(of: String(timeStr));
         realTimeStr.addAttributes([NSAttributedString.Key.foregroundColor : valueColor], range: realTimeStr.string.getNSRange(timeRange!));
         realTimeStr.addAttributes([NSAttributedString.Key.foregroundColor : desColor], range: realTimeStr.string.getNSRange(timeDesRange!));
-
-        
-        
         //price
         let priceStr = XStockHelper.getFormatNumStr(num: XStockHelper.getCGFloat(str: data?.price), dotCount: priceDot);
         let realPriceStr = NSMutableAttributedString.init(string: "价格:" + priceStr);
@@ -242,8 +235,6 @@ class XStockTimeInfoBar: CALayer {
         let priceRange = realPriceStr.string.range(of: String(priceStr));
         realPriceStr.addAttributes([NSAttributedString.Key.foregroundColor : desColor], range: realPriceStr.string.getNSRange(priceDesRange!));
         realPriceStr.addAttributes([NSAttributedString.Key.foregroundColor : upDowncolor!], range: realPriceStr.string.getNSRange(priceRange!));
-        
-        
         //avePrice
         let avePriceStr = XStockHelper.getFormatNumStr(num: XStockHelper.getCGFloat(str: data?.avePrice), dotCount: priceDot);
         let realAvePriceStr = NSMutableAttributedString.init(string: "均价:" + avePriceStr);
@@ -251,7 +242,6 @@ class XStockTimeInfoBar: CALayer {
         let avePriceRange = realAvePriceStr.string.range(of: String(avePriceStr));
         realAvePriceStr.addAttributes([NSAttributedString.Key.foregroundColor : desColor], range: realAvePriceStr.string.getNSRange(avePriceDesRange!));
         realAvePriceStr.addAttributes([NSAttributedString.Key.foregroundColor : upDowncolor!], range: realAvePriceStr.string.getNSRange(avePriceRange!));
-        
         //change
         let changeStr = XStockHelper.getFormatNumStr(num: change, dotCount: priceDot);
         let realChangeStr = NSMutableAttributedString.init(string: "涨跌额:" + changeStr);
@@ -259,7 +249,6 @@ class XStockTimeInfoBar: CALayer {
         let changeRange = realChangeStr.string.range(of: String(changeStr));
         realChangeStr.addAttributes([NSAttributedString.Key.foregroundColor : desColor], range: realChangeStr.string.getNSRange(changeDesRange!));
         realChangeStr.addAttributes([NSAttributedString.Key.foregroundColor : upDowncolor!], range: realChangeStr.string.getNSRange(changeRange!));
-        
         //changePct
         let changePctStr = XStockHelper.getFormatNumStr(num: changePct * 100.0, dotCount: 2) + "%";
         let realChangePctStr = NSMutableAttributedString.init(string: "涨跌幅:" + changePctStr);
@@ -267,8 +256,6 @@ class XStockTimeInfoBar: CALayer {
         let changePctRange = realChangePctStr.string.range(of: String(changePctStr));
         realChangePctStr.addAttributes([NSAttributedString.Key.foregroundColor : desColor], range: realChangePctStr.string.getNSRange(changePctDesRange!));
         realChangePctStr.addAttributes([NSAttributedString.Key.foregroundColor : upDowncolor!], range: realChangePctStr.string.getNSRange(changePctRange!));
-        
-        
         //volume
         let volume = XStockHelper.getCGFloat(str: data?.volume);
         var voluemeStr : String?;
@@ -283,20 +270,19 @@ class XStockTimeInfoBar: CALayer {
         realVolumeStr.addAttributes([NSAttributedString.Key.foregroundColor :desColor], range: realVolumeStr.string.getNSRange(volumeDesRange!));
         realVolumeStr.addAttributes([NSAttributedString.Key.foregroundColor :valueColor], range: realVolumeStr.string.getNSRange(volumeRange!));
         
-        //amount
-        let amount = volume * XStockHelper.getCGFloat(str: data?.price);
-        var amoutStr : String?;
-        if amount >= 10000 {
-            amoutStr = XStockHelper.getFormatNumStr(num: amount / 10000.0, dotCount: 2) + "万";
+        //turnover
+        let turnover = volume * XStockHelper.getCGFloat(str: data?.price);
+        var turnoverStr : String?;
+        if turnover >= 10000 {
+            turnoverStr = XStockHelper.getFormatNumStr(num: turnover / 10000.0, dotCount: 2) + "万";
         }else {
-            amoutStr = XStockHelper.getFormatNumStr(num: amount , dotCount: 2);
+            turnoverStr = XStockHelper.getFormatNumStr(num: turnover , dotCount: 2);
         }
-        let realAmountStr = NSMutableAttributedString.init(string: "成交额:" + amoutStr!);
-        let amountRange = realAmountStr.string.range(of: String(amoutStr!));
-        let amountDesRange = realAmountStr.string.range(of: String("成交额:"));
-        realAmountStr.addAttributes([NSAttributedString.Key.foregroundColor : valueColor], range: realAmountStr.string.getNSRange(amountRange!));
-        realAmountStr.addAttributes([NSAttributedString.Key.foregroundColor : desColor], range: realAmountStr.string.getNSRange(amountDesRange!));
-
+        let realAmountStr = NSMutableAttributedString.init(string: "成交额:" + turnoverStr!);
+        let turnoverRange = realAmountStr.string.range(of: String(turnoverStr!));
+        let turnoverDesRange = realAmountStr.string.range(of: String("成交额:"));
+        realAmountStr.addAttributes([NSAttributedString.Key.foregroundColor : valueColor], range: realAmountStr.string.getNSRange(turnoverRange!));
+        realAmountStr.addAttributes([NSAttributedString.Key.foregroundColor : desColor], range: realAmountStr.string.getNSRange(turnoverDesRange!));
         
         if XStockGlobal.share.infoBarType == .SideBar {
             right1.string = timeStr;
@@ -311,9 +297,9 @@ class XStockTimeInfoBar: CALayer {
             right5.foregroundColor = upDowncolor?.cgColor;
             right6.string = voluemeStr!;
             right6.foregroundColor = valueColor.cgColor;
-            right7.string = amoutStr!
+            right7.string = turnoverStr!
             right7.foregroundColor = valueColor.cgColor;
-        }else {
+        }else {///废弃
             resultStr.append(realTimeStr);
             resultStr.append(NSAttributedString.init(string: " "));
             resultStr.append(realPriceStr);

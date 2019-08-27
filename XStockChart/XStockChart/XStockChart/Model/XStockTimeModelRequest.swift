@@ -12,6 +12,7 @@ typealias TimeGetDataBlock = (_ success:Bool)->();
 
 class XStockTimeModelRequest: NSObject {
 
+    ///分时数据
     @objc var timeChartDataArr    : Array<XStockTimeModel>    = [] {
         willSet {
             print("分时数据数组被赋新值: \(newValue)");
@@ -23,6 +24,7 @@ class XStockTimeModelRequest: NSObject {
         }
     };
     
+    ///五日数据
     @objc var fiveChartDataArr    : Array<XStockTimeModel>    = [] {
         willSet {
             print("五日数据数组被赋新值: \(newValue)");
@@ -113,6 +115,8 @@ class XStockTimeModelRequest: NSObject {
         callB(false);
     }
     
+    
+    ///从数据中获取一些关键值
     func getDigitalFromArr(arr:Array<XStockTimeModel>) -> (maxPrice:Float?, minPirce:Float?, maxVolume : Float?) {
         var maxN : Float = 0.0;
         var minN : Float = MAXFLOAT;

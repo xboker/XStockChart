@@ -380,7 +380,7 @@ class XStockChartTimeView: UIView {
         return layer;
     }()
     
-    
+    //MARK:-----------MethodBegin-----------
     ///初始化方法
     init(frame: CGRect,
         stkType:XStockType!,
@@ -403,12 +403,12 @@ class XStockChartTimeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    ///刷新界面, 多次调用
     func refreshAllContent()  {
-        setupVolumeLines();
-        setupTimeAndAveLines();
+        setupVolumeLineLayers();
+        setupTimeAndAveLineLayers();
         setupDownTimeLayers()
-        setTextConent();
+        setTextConentLayers();
     }
     
     
@@ -453,16 +453,13 @@ class XStockChartTimeView: UIView {
     
 
     
-    ///初始化时调用一次
+    ///关键值, 初始化时调用一次
     func setupBaseData()  {
         chartLeftTopPoint = CGPoint(x: 0, y: 0);
         chartWidth = bounds.width;
         chartHeight = bounds.height - XStockGlobal.share.volumeHeihgt - 20;
         volumeLetTopPoint = CGPoint(x: 0, y: bounds.height - XStockGlobal.share.volumeHeihgt)
     }
-    
-    
-    
     
     ///绘制网格线,  初始化时调用一次
     func setupGridLines()  {
@@ -542,7 +539,6 @@ class XStockChartTimeView: UIView {
         left1Layer.foregroundColor = XStockColor.upColor().cgColor;
         left2Layer.foregroundColor = XStockColor.xStock_TextColor().cgColor;
         left3Layer.foregroundColor = XStockColor.downColor().cgColor;
-       
         let chartAreaSubHeight = chartHeight! / CGFloat(XStock_ChartHorizontalGridCount - 3);
         let chartRightTopPoint = CGPoint(x: chartLeftTopPoint!.x + chartWidth!, y: chartLeftTopPoint!.y);
         if XStockHelper.getScreenDeriction() == .LandscapeScreen {
@@ -574,8 +570,8 @@ class XStockChartTimeView: UIView {
         }
     }
     
-    ///绘制成交量柱子 多次调用;
-    func setupVolumeLines()  {
+    ///绘制成交量柱子
+    func setupVolumeLineLayers()  {
         guard realDataArr.count > 0 else {
             return;
         }
@@ -625,12 +621,8 @@ class XStockChartTimeView: UIView {
         aveVolumeLayer.path = avePath.cgPath;
     }
     
-    
-    
-    
-    
     ///绘制分时和均价
-    func setupTimeAndAveLines()  {
+    func setupTimeAndAveLineLayers()  {
         guard realDataArr.count > 0 else {
             return;
         }
@@ -655,13 +647,12 @@ class XStockChartTimeView: UIView {
                 timePath.addLine(to: CGPoint(x: chartLeftTopPoint!.x , y: chartLeftTopPoint!.y + priceOffsetY));
                 avePath.addLine(to: CGPoint(x: chartLeftTopPoint!.x , y: chartLeftTopPoint!.y + avePriceOffsetY));
             }else {
-//              let preObj = realDataArr[idx - 1];
                 timePath.move(to: prePricePoint);
                 avePath.move(to: preAvePoint);
                 preAvePoint = CGPoint(x: chartLeftTopPoint!.x + itemWidth * CGFloat(idx), y: chartLeftTopPoint!.y + avePriceOffsetY);
                 prePricePoint = CGPoint(x: chartLeftTopPoint!.x + itemWidth * CGFloat(idx), y: chartLeftTopPoint!.y + priceOffsetY);
-                preAvePoint = adjustPoint(point: preAvePoint);
-                prePricePoint = adjustPoint(point: prePricePoint);
+                preAvePoint = adjustPricePoint(point: preAvePoint);
+                prePricePoint = adjustPricePoint(point: prePricePoint);
                 if !idxObj.broken {
                     timePath.addLine(to: prePricePoint);
                     avePath.addLine(to: preAvePoint);
@@ -677,8 +668,6 @@ class XStockChartTimeView: UIView {
         if  realWidth > chartWidth! {
             realWidth = chartWidth!;
         }
-        
-        
         maskPath.addLine(to: CGPoint(x: realWidth , y: chartLeftTopPoint!.y + chartHeight!));
         maskPath.addLine(to: CGPoint(x: chartLeftTopPoint!.x , y: chartLeftTopPoint!.y + chartHeight!));
         gradientMaskLayer.path = maskPath.cgPath;
@@ -688,7 +677,7 @@ class XStockChartTimeView: UIView {
     }
     
     ///设置显示内容,图表周边的价格, 成交量, 百分比等信息
-    func setTextConent()  {
+    func setTextConentLayers()  {
         ///上方图表相关
         left1Layer.string = XStockHelper.getFormatNumStr(num: maxPrice, dotCount: priceDotCount);
         left2Layer.string = XStockHelper.getFormatNumStr(num: avePrice, dotCount: priceDotCount);
@@ -731,8 +720,8 @@ class XStockChartTimeView: UIView {
         volumeDesLayer.string = volumeDesStr;
     }
     
-    ///绘制分时时如果popint不再图表区域内的话, 就把他放在边上
-    func adjustPoint(point:CGPoint) -> CGPoint {
+    ///绘制分时时如果数据点不再图表区域内, 就把他放在边上
+    func adjustPricePoint(point:CGPoint) -> CGPoint {
         let rect = CGRect(x: chartLeftTopPoint!.x, y: chartLeftTopPoint!.y, width: chartWidth!, height: chartHeight!);
         if rect.contains(point) {
             return point;
@@ -812,7 +801,7 @@ class XStockChartTimeView: UIView {
         }
     }
     
-
+    ///长按弹出十字线
     func showCrossLine(point:CGPoint, show:Bool)  {
         if show {
             ///关闭CALayer的隐式动画, 防止交叉线移动不及时(如果使用UIView直接更改Frame即可, 因为不触发隐式动画)
@@ -854,7 +843,6 @@ class XStockChartTimeView: UIView {
                     let priceSize = XStockHelper.getStrSize(str: priceStr, fontSize: 9.0)
                     let priceOrigin = CGPoint(x: 0, y: point.y - priceSize.height / 2.0);
                     infoPriceLayer.frame.origin = priceOrigin;
-//                    infoPriceLayer.frame.size = priceSize;
                     infoPriceLayer.frame.size = CGSize(width: 30, height: priceSize.height);
                     infoPriceLayer.string = priceStr;
                     infoPriceLayer.isHidden = false;
@@ -872,7 +860,6 @@ class XStockChartTimeView: UIView {
                     let volOrigin = CGPoint(x: 0, y: point.y - volSize.height / 2.0);
                     infoPriceLayer.frame.origin = volOrigin;
                     infoPriceLayer.frame.size = volSize;
-//                    infoPriceLayer.frame.size = CGSize(width: 30, height: volSize.height);
                     infoPriceLayer.string = volStr;
                     infoPriceLayer.isHidden = false;
                 }
@@ -884,10 +871,8 @@ class XStockChartTimeView: UIView {
                     var pctStr = XStockHelper.getFormatNumStr(num: pctFloat, dotCount: 2);
                     pctStr = pctStr + "% ";
                     let pctSize = XStockHelper.getStrSize(str: pctStr, fontSize: 9.0)
-//                    let pctOrigin = CGPoint(x: chartWidth! - pctSize.width, y: point.y - pctSize.height / 2.0);
                     let pctOrigin = CGPoint(x: chartWidth! - 30, y: point.y - pctSize.height / 2.0);
                     infoPctLayer.frame.origin = pctOrigin;
-//                    infoPctLayer.frame.size = pctSize;
                     infoPctLayer.frame.size = CGSize(width: 30, height: pctSize.height);
                     infoPctLayer.string = pctStr;
                     infoPctLayer.isHidden = false;
@@ -903,6 +888,7 @@ class XStockChartTimeView: UIView {
         }
     }
     
+    ///绘制十字线时. 如果拖动点不在图表区域内, 将其换算到边缘
     func adjustCroseeCurvePoint(point:CGPoint) -> (realPoint:CGPoint, idx:Int) {
         var resultPoint  = point;
         var idx = lroundf(Float(resultPoint.x / itemWidth)) ;
@@ -936,7 +922,6 @@ class XStockChartTimeView: UIView {
             }
             resultPoint = CGPoint(x: getX, y: getY);
         }
-        print("idxX的值 \(CGFloat(idx) * itemWidth)")
         resultPoint = CGPoint(x: CGFloat(idx) * itemWidth, y: resultPoint.y);
         return (resultPoint, idx)
     }

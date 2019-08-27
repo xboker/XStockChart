@@ -38,6 +38,7 @@ class XStockKLineModel: NSObject {
     var preClose : String?;
     
     
+    ///初始化数据封装方法, 根据实际使用情况更改
     init(arr:Array<Any>) {
         super.init();
         if arr.count >= 13 {

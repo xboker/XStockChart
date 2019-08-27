@@ -15,17 +15,12 @@ private let Offset70 : CGFloat = 50.0;
 
 
 @objc protocol XStockContainViewDelegate {
-    func xStockTapToBigChart(showType:XStockChartType) -> Void;
+   @objc optional func xStockTapToBigChart(showType:XStockChartType) -> Void;
 }
 
 
 class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHandlerDelegate {
-   
-  
-    
-    
 
-    
     ///必须设置代理,以回调操作
     @objc var delegate : XStockContainViewDelegate?;
     ///股票的类型, 默认是沪深
@@ -36,19 +31,23 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
     @objc var preClose : String?;
     var idxView : UIView?;
     var viewsArr : Array<UIView> = [];
+    
+    
     ///获取数据的工具
     lazy var handler: XStockContainHandler = {
         let model = XStockContainHandler();
         model.delegate = self;
         return model;
     }()
+    
     ///顶部切换图表的按钮
     lazy var titleView: XStockContainTitleView = {
         let v : XStockContainTitleView = XStockContainTitleView.init(titleArr: XStockGlobal.share.chartShowTitleArr, frame: CGRect(x: 0.0, y: 0.0, width: self.bounds.size.width, height: XStock_ContainViewTitleHeight));
         v.delegate = self;
         return v;
     }()
-    ///分时, 五日
+    
+    ///分时
     lazy var timeV: XStockChartTimeView = {
         let rect : CGRect?;
         if XStockHelper.getScreenDeriction() == XStockScreenDirectionType.LandscapeScreen {
@@ -60,7 +59,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         return v;
     }()
     
-    
+    ///五日
     lazy var fiveV: XStockChartTimeView = {
         let rect : CGRect?;
         if XStockHelper.getScreenDeriction() == XStockScreenDirectionType.LandscapeScreen {
@@ -73,6 +72,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         return v;
     }()
     
+    ///日K
     lazy var dayV: XStockChartKLineView = {
         let rect : CGRect?;
         if XStockHelper.getScreenDeriction() == XStockScreenDirectionType.LandscapeScreen {
@@ -84,8 +84,8 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         v.isHidden = true;
         return v;
     }()
- 
     
+    ///周K
     lazy var weekV: XStockChartKLineView = {
         let rect : CGRect?;
         if XStockHelper.getScreenDeriction() == XStockScreenDirectionType.LandscapeScreen {
@@ -98,8 +98,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         return v;
     }()
     
-    
-    
+    ///月K
     lazy var monthV: XStockChartKLineView = {
         let rect : CGRect?;
         if XStockHelper.getScreenDeriction() == XStockScreenDirectionType.LandscapeScreen {
@@ -112,24 +111,20 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         return v;
     }()
     
-    
-    
-    
+    ///点击手势
     lazy var tapG: UITapGestureRecognizer = {
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(goToBigChart(sender:)))
         return tap;
     }()
-    
+
+    ///代理方法
     @objc func goToBigChart(sender:UITapGestureRecognizer)  {
-        self.delegate?.xStockTapToBigChart(showType: self.showType);
+        self.delegate?.xStockTapToBigChart!(showType: self.showType);
     }
     
     
+    //MARK:-----------MethodBegin-----------
     
-    
-    
-    
- 
     /// 初始化方法
     ///
     /// - Parameters:
@@ -149,7 +144,6 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         if preClose != nil {
             self.preClose = preClose!;
         }
-        
         self.addSubview(titleView);
         self.showType = showType!;
         titleView.reLayoutSelectBtn(showType: showType);
@@ -201,10 +195,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         assert(true, "请使用上方带Frame的初始化");
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
-    //MARK:XStockContainTitleViewDelegate
+    //MARK:XStockContainTitleViewDelegate   点击切换显示
     func chartTapChangeType(chartType: XStockChartType) {
         if showType == chartType {
             return;
@@ -238,9 +229,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
         idxView?.isHidden = false;
         handler.getChartData(dataType: XStockGetDataType.Default, showType: chartType);
     }
-    
-    
-    //MARK:XStockContainHandlerDelegate
+    //MARK:XStockContainHandlerDelegate   获取数据成功
     func getChartDataSuccess(chartType: XStockChartType, success: Bool) {
         switch chartType {
         case .Time: do {
@@ -269,14 +258,7 @@ class XStockContainView: UIView, XStockContainTitleViewDelegate, XStockContainHa
     
     
     
-    //MARK:外界使用入口
-    
-    
-    
-    
-    
-    
-    
+
     
     /*
     // Only override draw() if you perform custom drawing.

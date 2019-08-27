@@ -13,11 +13,12 @@ typealias KLineGetDataBlock = (_ success:Bool)->();
 
 class XStockKLineModelRequest: NSObject {
 
+    ///日K数据, 所有
     @objc var dayKChartDataArr    : Array<XStockKLineModel>   = [];
+    ///周K数据, 所有
     @objc var weekKChartDataArr   : Array<XStockKLineModel>   = [];
+    ///月K数据, 所有
     @objc var monthKChartDataArr  : Array<XStockKLineModel>   = [];
-    
-    
     
     ///最后一根蜡烛数据在数组中倒序所在位置
     var lastPoint = 0;
@@ -26,10 +27,7 @@ class XStockKLineModelRequest: NSObject {
     ///指标线位置显示内容, 默认显示成交量
     var idxShowType = XStockIndexType.Volume;
     
-
-
-
-
+    
     override init() {
         super.init();
         if XStockHelper.getScreenDeriction() == .LandscapeScreen {
@@ -38,13 +36,6 @@ class XStockKLineModelRequest: NSObject {
             self.showItemCount = XStock_MinKLineCount;
         }
     }
-    
-    
-    
-    
-    
-    
-    
     
     ///获取日K数据
     func getDayData(type:XStockGetDataType, callB:TimeGetDataBlock)  {
@@ -75,11 +66,6 @@ class XStockKLineModelRequest: NSObject {
         callB(false);
     }
     
-    
-    
-    
-    
-    
     ///获取周K数据
     func getWeekData(type:XStockGetDataType, callB:TimeGetDataBlock)  {
         if  type == .Default && weekKChartDataArr.count > 0 {
@@ -109,9 +95,6 @@ class XStockKLineModelRequest: NSObject {
         callB(false);
     }
     
-    
-    
- 
     ///获取月K数据
     func getMonthData(type:XStockGetDataType, callB:TimeGetDataBlock)  {
         if  type == .Default && monthKChartDataArr.count > 0 {
@@ -141,13 +124,6 @@ class XStockKLineModelRequest: NSObject {
         callB(false);
     }
     
-    
    
-    
-    
-    
-    
-    
-    
     
 }

@@ -19,7 +19,7 @@ class XStockGlobal: NSObject {
     @objc class var share: XStockGlobal {
         return model;
     }
-    
+
     override func copy() -> Any {
         return model;
     }
@@ -41,7 +41,7 @@ class XStockGlobal: NSObject {
     public var chartShowTitleArr : Array<String> = ["分时", "五日", "日K", "周K", "月K"];
     ///长按图表时出现的提示信息view, 默认在左右出现--------后续删掉
     public var infoBarType : XStockLongPressInfoType = .SideBar;
-    ///默认情况下竖屏时不显示  成交量的描述
+    ///默认情况下竖屏时不显示成交量的描述
     public var alwaysShowVolumeDes : Bool = true;
     ///K线图的柱子类型 实心或者空心
     public var kLineColumeType = XStockKLineColumeType.Solid;

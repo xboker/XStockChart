@@ -1,7 +1,7 @@
 //
 //  XStockColor.swift
 //  XStockChart
-//  颜色工具
+//  颜色工具, 把需要换肤功能的颜色在这里添加, 其余的根据喜好
 //  Created by xiekunpeng on 2019/7/24.
 //  Copyright © 2019 xiekunpeng. All rights reserved.
 //
@@ -22,9 +22,7 @@ class XStockColor: NSObject {
         return UIColor.init(red: CGFloat(r) / 255.0, green:  CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: alpha);
     }
     
-    
-    
-    
+
     //MARK:Public
     
     ///整体背景色
@@ -71,11 +69,7 @@ class XStockColor: NSObject {
     class func getFairColor() -> UIColor {
         return getColor(hex: XStock_GrayColor);
     }
-    
-    
-    
-    
-    
+
     ///分时/五日线的颜色
    class  func  getTimeLineColor() -> UIColor  {
         return getColor(hex: XStock_Time_FiveLineColor);
@@ -86,35 +80,18 @@ class XStockColor: NSObject {
         return getColor(hex: XStock_AveLineColor);
     }
     
-    
+    ///长按十字线颜色
     class func getCrossCurveColor() -> UIColor {
         return getColor(hex: XStock_CrossCurveColor);
     }
     
-    
-    
-    
+    ///长按InfoBar背景色
     class func getTimeInfoLayerBackColor() -> UIColor {
         if XStockGlobal.share.globalColorType == .Light {
             return getColor(hex: XStock_CrossInfoBackColor_White, alpha: 1);
         }
         return getColor(hex: XStock_CrossInfoBackColor_Dark, alpha: 0.8);
     }
-    
-    
-    
-    
-    //    ///顶部标题下方的underLine颜色
-    //    class func underLineColor() -> UIColor {
-    //        return getColor(hex: XStock_ContainViewUnderLineColor, alpha: 1);
-    //    }
-    
-    
-    
-    
-    
-    
-    
     
     
 }
