@@ -17,8 +17,8 @@ class XStockChartKLineView: UIView {
     var volumeLetTopPoint : CGPoint?;
     var chartWidth : CGFloat?;
     var chartHeight : CGFloat?;
-    ///记录拖动K线图时的offsetX
-    var recordOffset : CGFloat = 0.0;
+    ///记录拖动K线图时的lastPoint
+    var recordLastPoint : Int = 0;
     ///记录pinch时的比例
     var recordWidth : CGFloat?;
     ///最高价
@@ -794,34 +794,36 @@ class XStockChartKLineView: UIView {
     //MARK: 手势方法集合
     ///滑动方法
     @objc func panAction(sender : UIPanGestureRecognizer) {
-
-        let point  = sender.translation(in: sender.view);
-//        print("触发拖动 \(point.x),  记录点 \(recordPoint!.x)");
+        print("当前的方向 \(sender.velocity(in: sender.view).x)")
+        if sender.state == UIPinchGestureRecognizer.State.began {
+            recordLastPoint = handler!.kLineManager.lastPoint;
+        }
         if sender.state == UIPinchGestureRecognizer.State.changed {
-           
-            let offsetCount : Int = lroundf(Float((recordOffset - point.x) / itemWidth!));
-           
-            //            handler?.kLineManager.lastPoint += offsetCount;
-
-//            if sender.velocity(in: sender.view)!.x > point.x {
-//                if handler!.kLineManager.lastPoint >= allDataArr.count - 1 {
-//                    handler?.kLineManager.lastPoint = allDataArr.count - 1;
-//                }
+            var point  = sender.translation(in: sender.view);
+        if sender.velocity(in: sender.view).x < 0 {
+            
+        }
+            
+            let offsetCount : Int = lroundf(Float(point.x / itemWidth!));
+            var tempValue = recordLastPoint - offsetCount;
+//            if sender.velocity(in: sender.view).x < 0 {
+                if tempValue >= allDataArr.count - 1 {
+                    tempValue = allDataArr.count - 1;
+                    recordLastPoint = allDataArr.count - 1 ;
+                }
 //            }else {
-//                if handler!.kLineManager.lastPoint <= XStock_MinKLineCount {
-//                    handler?.kLineManager.lastPoint = XStock_MinKLineCount;
-//                }
+                if tempValue <= XStock_MinKLineCount {
+                    tempValue = XStock_MinKLineCount;
+                    recordLastPoint = XStock_MinKLineCount;
+                }
 //            }
-            refreshAllContent();
+            print("tempValue \(tempValue)")
+            if tempValue != handler!.kLineManager.lastPoint {
+                refreshAllContent();
+                handler!.kLineManager.lastPoint = tempValue;
+            }
         }
-        if sender.state == UIPinchGestureRecognizer.State.ended {
-            print("触发结束时拖动 \(point.x), ");
-            recordOffset += point.x;
-        }
-        
-        
     }
-    
     ///捏合手势
     @objc func pinchAction(sender : UIPinchGestureRecognizer) {
         if sender.state == UIGestureRecognizer.State.began {
