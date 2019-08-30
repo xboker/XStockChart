@@ -190,3 +190,17 @@ extension String {
         return NSMakeRange(utf16.distance(from: utf16.startIndex, to: from), utf16.distance(from: from, to: to))
     }
 }
+
+
+
+extension UIDevice {
+    class func switchOrientation(orientation:UIInterfaceOrientation)  {
+        let resetOrientationTarget = NSNumber.init(value: UIInterfaceOrientation.unknown.rawValue);
+        UIDevice.current.setValue(resetOrientationTarget, forKey: "orientation");
+        let orientationTarget = NSNumber.init(value: orientation.rawValue);
+        UIDevice.current.setValue(orientationTarget, forKey: "orientation");
+    }
+}
+
+
+

@@ -25,7 +25,7 @@ class ViewController: UIViewController, XStockContainViewDelegate {
     //MARK:XStockContainViewDelegate
     func xStockChartTaped(showType: XStockChartType) {
         AppDelegate.delegate.isLandScape = true;
-        UIDevice.switch(UIInterfaceOrientation.landscapeRight);
+        UIDevice.switchOrientation(orientation: UIInterfaceOrientation.landscapeRight);
         print("当前方向  \(XStockHelper.getScreenDeriction())")
         let landscapeC = LandscapeViewController.init(stk: "665.HK", preClose: "2.45", showType: showType);
         let navC  = UINavigationController.init(rootViewController: landscapeC);

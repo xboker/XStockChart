@@ -31,18 +31,13 @@ class LandscapeViewController: UIViewController, XStockContainViewDelegate {
         self.view.addSubview(chartView!)
         // Do any additional setup after loading the view.
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated);
-//        AppDelegate.delegate.isLandScape = false;
-//        UIDevice.switch(UIInterfaceOrientation.portrait);
-//    }
+ 
     
     //MARK:XStockContainViewDelegate
     func xStockChartTaped(showType: XStockChartType) {
         AppDelegate.delegate.isLandScape = false;
-        UIDevice.switch(UIInterfaceOrientation.portrait);
-        self.dismiss(animated: true, completion: nil); 
+        UIDevice.switchOrientation(orientation: UIInterfaceOrientation.portrait);
+        self.dismiss(animated: true, completion: nil);
     }
     
     /*
